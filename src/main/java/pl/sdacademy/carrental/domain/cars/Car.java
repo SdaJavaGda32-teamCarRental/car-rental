@@ -1,9 +1,6 @@
 package pl.sdacademy.carrental.domain.cars;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import pl.sdacademy.carrental.domain.Branch;
 
 import javax.persistence.*;
