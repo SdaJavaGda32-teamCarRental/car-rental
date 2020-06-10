@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface CarRepository extends JpaRepository<Car, Long> {
    
-   Optional<Car> findCarByPlateNumber(final String plateNumber);
+   Optional<Car> findCarByPlateNumber(String plateNumber);
    
-   List<Car> findCarsByCurrentStatusEquals(final Status status);
+   List<Car> findCarsByCurrentStatusEquals(Status status);
    
    
 }
