@@ -1,9 +1,7 @@
 package pl.sdacademy.carrental.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import pl.sdacademy.carrental.domain.cars.Car;
 
 import javax.persistence.*;
@@ -25,9 +23,15 @@ public class Branch {
    @OneToOne
    private Address address;
    
+   @ToString.Exclude
+   @EqualsAndHashCode.Exclude
    @OneToMany(mappedBy = "currentBranch")
-   private List<Car> carsOnHand;
+   @JsonIgnore
+   private List<Car> carsOnHand = new ArrayList<>();
    
+   @ToString.Exclude
+   @EqualsAndHashCode.Exclude
+   @JsonIgnore
    @OneToMany(mappedBy = "branch")
    private List<Employee> employees = new ArrayList<>();
 }
