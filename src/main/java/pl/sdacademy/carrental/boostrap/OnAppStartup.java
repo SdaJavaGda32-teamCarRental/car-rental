@@ -9,9 +9,11 @@ import pl.sdacademy.carrental.domain.Branch;
 import pl.sdacademy.carrental.domain.cars.Car;
 import pl.sdacademy.carrental.domain.cars.FuelType;
 import pl.sdacademy.carrental.domain.cars.Status;
-import pl.sdacademy.carrental.repositories.CarRepository;
-import pl.sdacademy.carrental.repositories.BranchRepository;
 import pl.sdacademy.carrental.repositories.AddressRepository;
+import pl.sdacademy.carrental.repositories.BranchRepository;
+import pl.sdacademy.carrental.repositories.CarRepository;
+
+import java.util.List;
 
 
 @Component
@@ -22,7 +24,9 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
    private final BranchRepository branchRepo;
    private final AddressRepository addressRepo;
    
-   public OnAppStartup(final CarRepository carRepo, final BranchRepository branchRepo, final AddressRepository addressRepo) {
+   public OnAppStartup(final CarRepository carRepo,
+                       final BranchRepository branchRepo,
+                       final AddressRepository addressRepo) {
       this.carRepo = carRepo;
       this.branchRepo = branchRepo;
       this.addressRepo = addressRepo;
@@ -31,19 +35,19 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
    @Override
    public void onApplicationEvent(final ContextRefreshedEvent contextRefreshedEvent) {
       
-      final Address address = addressRepo.save(Address.builder()
+      final Address gdAddress = addressRepo.save(Address.builder()
             .street("Grunwaldzka")
             .building("12D")
             .zip("80-053")
             .city("Gdańsk")
             .build());
       
-      final Branch branch = branchRepo.save(Branch.builder()
-            .address(address)
+      final Branch gdansk = branchRepo.save(Branch.builder()
+            .address(gdAddress)
             .city("Gdańsk")
             .build());
       
-      carRepo.save(Car.builder()
+      final Car skoda = Car.builder()
             .make("Skoda")
             .model("Rapid")
             .fuelType(FuelType.GASOLINE)
@@ -52,10 +56,10 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
             .color("white")
             .rentPrice(99)
             .currentStatus(Status.IN)
-            .currentBranch(branch)
-            .build());
+            .currentBranch(gdansk)
+            .build();
       
-      carRepo.save(Car.builder()
+      final Car merc = Car.builder()
             .make("Mercedes-Benz")
             .model("E-Class")
             .fuelType(FuelType.DIESEL)
@@ -64,8 +68,11 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
             .color("black")
             .rentPrice(320)
             .currentStatus(Status.OUT)
-            .currentBranch(branch)
-            .build());
+            .currentBranch(gdansk)
+            .build();
       
+      carRepo.saveAll(List.of(
+            skoda,
+            merc));
    }
 }
