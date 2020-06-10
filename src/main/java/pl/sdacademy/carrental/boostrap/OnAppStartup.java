@@ -3,6 +3,7 @@ package pl.sdacademy.carrental.boostrap;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import pl.sdacademy.carrental.domain.Address;
 import pl.sdacademy.carrental.domain.Branch;
 import pl.sdacademy.carrental.domain.cars.Car;
@@ -14,6 +15,7 @@ import pl.sdacademy.carrental.repositories.AddressRepository;
 
 
 @Component
+@Transactional
 public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> {
    
    private final CarRepository carRepo;
