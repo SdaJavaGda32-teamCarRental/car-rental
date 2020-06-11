@@ -18,9 +18,8 @@
             <p th:text="${branch.getEmployees()}"></p>
             <p></p>
             <p th:text="${branch.getCarsOnHand()}"></p>
-        </li>
-        <li th:each="branch : ${oneOrTwoCarsNotification}">
-            <span th:if="${oneOrTwoCarsNotification == true}">There are less than 3 cars available!</span>
+            <p></p>
+            <span th:if="${MinimumAvailableCarsNotification == true}">There are less than 3 cars available in this branch!</span>
         </li>
     </ol>
 </main>

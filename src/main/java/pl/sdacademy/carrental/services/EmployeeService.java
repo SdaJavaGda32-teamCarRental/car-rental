@@ -18,9 +18,4 @@ public class EmployeeService {
         this.employeeRepo = employeeRepo;
     }
 
-
-//    public List<Employee> getManager(){
-//        return employeeRepo.findEmployeesByRole(EmployeeRole.MANAGER);
-//    }
-
 }
