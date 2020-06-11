@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Company's Branches</title>
+</head>
+<body>
+
+<main>
+    <p>Branches:</p>
+    <ol>
+        <li th:id="${branch.id}" th:each="branch : ${branchList}">
+            <p th:text="${branch.getId()}"></p>
+            <p th:text="${branch.getCity()}"></p>
+            <p th:text="${branch.getAddress()}"></p>
+            <p></p>
+            <p th:text="${branch.getEmployees()}"></p>
+            <p></p>
+            <p th:text="${branch.getCarsOnHand()}"></p>
+        </li>
+        <li th:each="branch : ${oneOrTwoCarsNotification}">
+            <span th:if="${oneOrTwoCarsNotification == true}">There are less than 3 cars available!</span>
+        </li>
+    </ol>
+</main>
+
+</body>
+</html>

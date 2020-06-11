@@ -6,12 +6,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import pl.sdacademy.carrental.domain.Address;
 import pl.sdacademy.carrental.domain.Branch;
+import pl.sdacademy.carrental.domain.Employee;
+import pl.sdacademy.carrental.domain.EmployeeRole;
 import pl.sdacademy.carrental.domain.cars.Car;
 import pl.sdacademy.carrental.domain.cars.FuelType;
 import pl.sdacademy.carrental.domain.cars.Status;
 import pl.sdacademy.carrental.repositories.AddressRepository;
 import pl.sdacademy.carrental.repositories.BranchRepository;
 import pl.sdacademy.carrental.repositories.CarRepository;
+import pl.sdacademy.carrental.repositories.EmployeeRepository;
 
 import java.util.List;
 
@@ -23,13 +26,15 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
    private final CarRepository carRepo;
    private final BranchRepository branchRepo;
    private final AddressRepository addressRepo;
+   private final EmployeeRepository employeeRepo;
    
    public OnAppStartup(final CarRepository carRepo,
                        final BranchRepository branchRepo,
-                       final AddressRepository addressRepo) {
+                       final AddressRepository addressRepo, EmployeeRepository employeeRepo) {
       this.carRepo = carRepo;
       this.branchRepo = branchRepo;
       this.addressRepo = addressRepo;
+      this.employeeRepo = employeeRepo;
    }
    
    @Override
@@ -41,11 +46,23 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
             .zip("80-053")
             .city("Gdańsk")
             .build());
+
+      final Address gdAddress2 = addressRepo.save(Address.builder()
+              .street("Mickiewicza")
+              .building("5F")
+              .zip("80-435")
+              .city("Gdańsk")
+              .build());
       
       final Branch gdansk = branchRepo.save(Branch.builder()
             .address(gdAddress)
             .city("Gdańsk")
             .build());
+
+      final Branch gdansk2 = branchRepo.save(Branch.builder()
+              .address(gdAddress2)
+              .city("Gdańsk")
+              .build());
       
       final Car skoda = Car.builder()
             .make("Skoda")
@@ -58,7 +75,7 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
             .currentStatus(Status.IN)
             .currentBranch(gdansk)
             .build();
-      
+
       final Car merc = Car.builder()
             .make("Mercedes-Benz")
             .model("E-Class")
@@ -70,9 +87,38 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
             .currentStatus(Status.OUT)
             .currentBranch(gdansk)
             .build();
-      
+
+      final Car audi = Car.builder()
+              .make("Audi")
+              .model("A6")
+              .fuelType(FuelType.DIESEL)
+              .productionYear(2010)
+              .plateNumber("GD246DW")
+              .color("red")
+              .rentPrice(250)
+              .currentStatus(Status.OUT)
+              .currentBranch(gdansk2)
+              .build();
+
+      final Employee marek = Employee.builder()
+              .firstName("Marek")
+              .lastName("Kowalski")
+              .role(EmployeeRole.EMPLOYEE)
+              .branch(gdansk2)
+              .build();
+
+      final Employee zenek = Employee.builder()
+              .firstName("Zenek")
+              .lastName("Poranek")
+              .role(EmployeeRole.EMPLOYEE)
+              .branch(gdansk)
+              .build();
+
       carRepo.saveAll(List.of(
             skoda,
-            merc));
+            merc,audi));
+
+      employeeRepo.saveAll(List.of(
+              marek,zenek));
    }
 }

@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html lang="en"
-xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-   <meta charset="UTF-8">
-   <title>Car List</title>
+    <meta charset="UTF-8">
+    <title>Car List</title>
 </head>
 <body>
 
 <main>
-   <p>All cars:</p>
-   <ol>
-      <li th:each="car : ${carList}">
+    <p>All cars:</p>
+    <ol>
+        <li th:each="car : ${carList}">
             <p th:text="${car.getMake()}"></p>
             <p th:text="${car.getModel()}"></p>
             <p th:text="${car.getColor()}"></p>
             <p th:text="${car.getFuelType()}"></p>
             <p th:text="${car.getRentPrice()}"></p>
             <p th:text="${car.getCurrentBranch().getCity()}"></p>
-      </li>
-   </ol>
-   <p>currently available:</p>
-   <ol>
-      <li th:each="car : ${availableCars}">
+        </li>
+    </ol>
+    <p>currently available:</p>
+    <ol>
+        <li th:each="car : ${availableCars}">
             <p th:text="${car.getMake()}"></p>
             <p th:text="${car.getModel()}"></p>
             <p th:text="${car.getColor()}"></p>
             <p th:text="${car.getFuelType()}"></p>
             <p th:text="${car.getRentPrice()}"></p>
             <p th:text="${car.getCurrentBranch().getCity()}"></p>
-      </li>
-   </ol>
+        </li>
+    </ol>
 </main>
 
 </body>

@@ -7,6 +7,7 @@ import pl.sdacademy.carrental.domain.cars.Status;
 import pl.sdacademy.carrental.repositories.CarRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -25,5 +26,13 @@ public class CarService {
    
    public List<Car> getAvailable() {
       return carRepo.findCarsByCurrentStatusEquals(Status.IN);
+   }
+
+   public long countAvailableCars(){
+      return getAvailable().size();
+   }
+
+   public boolean availableOnlyOneOrTwoCars(){
+      return countAvailableCars() == 1 || countAvailableCars() == 2;
    }
 }
