@@ -13,5 +13,4 @@ public interface CarRepository extends JpaRepository<Car, Long> {
    
    List<Car> findCarsByCurrentStatusEquals(Status status);
    
-   
 }

@@ -50,4 +50,10 @@ public class Car {
    @Column(name = "status")
    private Status currentStatus;
    
+   @Enumerated(EnumType.STRING)
+   @Column(name = "category")
+   private CarCategory category;
+   
+   @Column(name = "transmission_auto")
+   private boolean isAutomatic;
 }
