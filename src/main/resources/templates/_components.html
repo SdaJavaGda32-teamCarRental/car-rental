@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+   <th:block th:fragment="headTags">
+      <meta charset="UTF-8">
+      <meta name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <script defer type="text/javascript" src="scripts/mdbootstrap/jquery.min.js"></script>
+      <script defer type="text/javascript" src="scripts/mdbootstrap/popper.min.js"></script>
+      <script defer type="text/javascript" src="scripts/mdbootstrap/bootstrap.min.js"></script>
+      <script defer type="text/javascript" src="scripts/mdbootstrap/mdb.min.js"></script>
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+      <link rel="stylesheet" href="styles/mdboostrap/bootstrap.min.css">
+      <link rel="stylesheet" href="styles/mdboostrap/mdb.min.css">
+      <link rel="stylesheet" href="/styles/styles.css" type="text/css">
+   </th:block>
+</head>
+<body>
+
+<header>
+   <nav th:fragment="navigationBar" class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
+      <a class="navbar-brand" href="#"><strong>Navbar</strong></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+         <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+               <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" href="#">Profile</a>
+            </li>
+         </ul>
+      </div>
+   </nav>
+</header>
+
+</body>
+</html>

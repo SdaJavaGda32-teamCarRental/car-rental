@@ -18,9 +18,12 @@ public class Branch {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
+   
+   @Column(name = "city")
    private String city;
    
    @OneToOne
+   @JoinColumn(name = "address_id")
    private Address address;
    
    @ToString.Exclude

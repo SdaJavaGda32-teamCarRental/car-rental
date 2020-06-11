@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en"
-xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-   <meta charset="UTF-8">
+   <div th:replace="_components :: headTags"></div>
    <title>Car List</title>
 </head>
 <body>
-
+<header th:replace="_components.html :: navigationBar"></header>
 <main>
    <p>All cars:</p>
    <ol>

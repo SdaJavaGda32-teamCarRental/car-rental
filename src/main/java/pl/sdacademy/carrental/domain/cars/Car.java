@@ -37,7 +37,11 @@ public class Car {
    private String color;
    
    @NotNull
+   @Column(name = "price")
    private int rentPrice;
+   
+   @Column(name = "mileage")
+   private int mileage;
    
    @ManyToOne
    @JoinColumn(name = "branch_id")
