@@ -1,13 +1,10 @@
 package pl.sdacademy.carrental.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Data
 @AllArgsConstructor
@@ -17,8 +14,6 @@ public class Company {
     private static Company INSTANCE;
 
     @Id
-    private Long id = 1L;
-
     @NotNull
     @Column(name = "company_name")
     private String name;

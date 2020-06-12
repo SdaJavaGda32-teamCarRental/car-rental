@@ -6,7 +6,7 @@
 </head>
 <body>
 <div class="branch-create-from-container">
-    <form method="post" class="branch-form" th:action="@{/company/branches/create}" th:object="${branchForm}">
+    <form method="post" class="branch-form" th:action="@{/admin/company/branches/create}" th:object="${branchForm}">
         <p>Create branch with following data:</p>
         <label>
             City
@@ -43,7 +43,7 @@
     </form>
 </div>
 <p> </p>
-<form method="get" th:action="@{/company/branches}">
+<form method="get" th:action="@{/admin/company/branches}">
     <button type="submit">Back to branches list</button>
 </form>
 

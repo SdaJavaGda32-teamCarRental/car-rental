@@ -9,7 +9,7 @@ import pl.sdacademy.carrental.services.BranchService;
 import pl.sdacademy.carrental.services.CompanyService;
 
 @Controller
-@RequestMapping("/company") //Dostęp tylko dla admina! Dodać później
+@RequestMapping("admin/company")
 public class CompanyController {
     private final CompanyService companyService;
     private final BranchService branchService;
@@ -34,13 +34,13 @@ public class CompanyController {
     @PostMapping("/branches/create")
     public String handleNewBranch(@ModelAttribute(name = "branchForm") final BranchForm branchForm) {
         branchService.createBranch(branchForm);
-        return "redirect:/company/branches";
+        return "redirect:/admin/company/branches";
     }
 
     @GetMapping("/branches/delete/{id}")
     public String deleteBranch(@PathVariable final Long id) {
         branchService.delete(id);
-        return "redirect:/company/branches";
+        return "redirect:/admin/company/branches";
     }
 
     @GetMapping("/branches/edit/{id}")
@@ -61,7 +61,7 @@ public class CompanyController {
     @PostMapping("/branches/edit/{id}")
     public String handleBranchEdit(@PathVariable final Long id, @ModelAttribute(name = "branchForm") final BranchForm branchForm) {
         branchService.updateBranch(id, branchForm);
-        return "redirect:/company/branches";
+        return "redirect:/admin/company/branches";
     }
 
 }
