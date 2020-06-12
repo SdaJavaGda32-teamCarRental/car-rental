@@ -11,18 +11,18 @@ import java.util.List;
 @Service
 @Transactional
 public class CarService {
-   
+
    private final CarRepository carRepo;
    
    public CarService(final CarRepository carRepo) {
       this.carRepo = carRepo;
    }
-   
-   
+
+
    public List<Car> getAll() {
       return carRepo.findAll();
    }
-   
+
    public List<Car> getAvailable() {
       return carRepo.findCarsByCurrentStatusEquals(Status.IN);
    }
