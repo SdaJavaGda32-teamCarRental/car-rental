@@ -10,16 +10,20 @@
 <main>
     <p>Branches:</p>
     <ol>
-        <li th:id="${branch.id}" th:each="branch : ${branchList}">
-            <p th:text="${branch.getId()}"></p>
-            <p th:text="${branch.getCity()}"></p>
-            <p th:text="${branch.getAddress()}"></p>
+        <li th:id="${branch.key.id}" th:each="branch : ${branchList}">
+            <p th:text="${branch.key.city}"></p>
+            <p>
+                <span th:text="${branch.key.address.street} + ' '"></span>
+                <span th:text="${branch.key.address.building} + ' '"></span>
+                <span th:if="${branch.key.address.apartment != null}" th:text="${branch.key.address.apartment}"></span>
+            </p>
+            <p>
+                <span th:text="${branch.key.address.zip} + ' '"></span>
+                <span th:text="${branch.key.address.city} + ' '"></span>
+            </p>
+            <p th:text="${branch.key.employees}"></p>
             <p></p>
-            <p th:text="${branch.getEmployees()}"></p>
-            <p></p>
-            <p th:text="${branch.getCarsOnHand()}"></p>
-            <p></p>
-            <span th:if="${MinimumAvailableCarsNotification == true}">There are less than 3 cars available in this branch!</span>
+            <span th:if="${branch.value < MinimumAvailableCars}">There are less than 3 cars available in this branch!</span>
         </li>
     </ol>
 </main>

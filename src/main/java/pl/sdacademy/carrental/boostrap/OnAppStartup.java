@@ -48,11 +48,11 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
             .build());
 
       final Address gdAddress2 = addressRepo.save(Address.builder()
-              .street("Mickiewicza")
-              .building("5F")
-              .zip("80-435")
-              .city("Gdańsk")
-              .build());
+            .street("Mickiewicza")
+            .building("5F")
+            .zip("80-435")
+            .city("Gdańsk")
+            .build());
       
       final Branch gdansk = branchRepo.save(Branch.builder()
             .address(gdAddress)
@@ -60,9 +60,9 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
             .build());
 
       final Branch gdansk2 = branchRepo.save(Branch.builder()
-              .address(gdAddress2)
-              .city("Gdańsk")
-              .build());
+            .address(gdAddress2)
+            .city("Gdańsk")
+            .build());
       
       final Car skoda = Car.builder()
             .make("Skoda")
@@ -89,36 +89,51 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
             .build();
 
       final Car audi = Car.builder()
-              .make("Audi")
-              .model("A6")
-              .fuelType(FuelType.DIESEL)
-              .productionYear(2010)
-              .plateNumber("GD246DW")
-              .color("red")
-              .rentPrice(250)
-              .currentStatus(Status.OUT)
-              .currentBranch(gdansk2)
-              .build();
+            .make("Audi")
+            .model("A6")
+            .fuelType(FuelType.DIESEL)
+            .productionYear(2010)
+            .plateNumber("GD246DW")
+            .color("red")
+            .rentPrice(250)
+            .currentStatus(Status.OUT)
+            .currentBranch(gdansk2)
+            .build();
 
+      final Car panda = Car.builder()
+            .make("FIAT")
+            .model("Panda")
+            .fuelType(FuelType.GASOLINE)
+            .productionYear(2018)
+            .plateNumber("GD223KS")
+            .color("pink")
+            .rentPrice(50)
+            .currentStatus(Status.IN)
+            .currentBranch(gdansk)
+            .build();
+      
       final Employee marek = Employee.builder()
-              .firstName("Marek")
-              .lastName("Kowalski")
-              .role(EmployeeRole.EMPLOYEE)
-              .branch(gdansk2)
-              .build();
+            .firstName("Marek")
+            .lastName("Kowalski")
+            .role(EmployeeRole.EMPLOYEE)
+            .branch(gdansk2)
+            .build();
 
       final Employee zenek = Employee.builder()
-              .firstName("Zenek")
-              .lastName("Poranek")
-              .role(EmployeeRole.EMPLOYEE)
-              .branch(gdansk)
-              .build();
+            .firstName("Zenek")
+            .lastName("Poranek")
+            .role(EmployeeRole.EMPLOYEE)
+            .branch(gdansk)
+            .build();
 
       carRepo.saveAll(List.of(
             skoda,
-            merc,audi));
+            merc,
+            audi,
+            panda));
 
       employeeRepo.saveAll(List.of(
-              marek,zenek));
+            marek,
+            zenek));
    }
 }
