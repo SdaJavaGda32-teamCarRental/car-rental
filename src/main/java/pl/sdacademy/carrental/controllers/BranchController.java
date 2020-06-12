@@ -11,7 +11,7 @@ import pl.sdacademy.carrental.services.CarService;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin/list-branches")
+@RequestMapping("/admin")
 public class BranchController {
 
     private final BranchService branchService;
@@ -22,7 +22,7 @@ public class BranchController {
         this.carService = carService;
     }
 
-    @GetMapping
+    @GetMapping("/list-branches")
     public String listAllBranches(final Model model) {
         final List<Branch> allBranches = branchService.getAll();
         final boolean carsAvailability = carService.shouldNotifyAboutLowCarAvailability();
