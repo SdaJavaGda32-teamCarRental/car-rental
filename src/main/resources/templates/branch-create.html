@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create branch</title>
+</head>
+<body>
+<div class="branch-create-from-container">
+    <form method="post" class="branch-form" th:action="@{/company/branches/create}" th:object="${branchForm}">
+        <p>Create branch with following data:</p>
+        <label>
+            City
+            <input type="text" th:field="*{city}">
+        </label>
+
+        <label>
+            Street
+            <input type="text" th:field="*{street}">
+        </label>
+
+        <label>
+            Building no.
+            <input type="text" th:field="*{building}">
+        </label>
+        <label>
+            Apartment no.
+            <input type="text" th:field="*{apartment}">
+        </label>
+        <label>
+            Zip code
+            <input type="text" th:field="*{zip}">
+        </label>
+        <label>
+            Branch status
+            <select th:field="*{status}">
+                <option value="OPEN">OPEN</option>
+                <option value="CLOSED">CLOSED</option>
+            </select>
+        </label>
+        <button type="submit">
+            Create branch
+        </button>
+    </form>
+</div>
+<p> </p>
+<form method="get" th:action="@{/company/branches}">
+    <button type="submit">Back to branches list</button>
+</form>
+
+</body>
+</html>

@@ -11,7 +11,7 @@
     <groupId>pl.sdacademy</groupId>
     <artifactId>car-rental</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>car-rental</name>
+    <name>car-company</name>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -78,7 +78,7 @@
         </dependency>
     </dependencies>
 
-    <description>Car rental service project</description>
+    <description>Car company service project</description>
 
     <properties>
         <java.version>11</java.version>
