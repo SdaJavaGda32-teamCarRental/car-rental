@@ -22,13 +22,16 @@ public class Branch {
    
    @OneToOne
    private Address address;
-   
+
+   @Enumerated(EnumType.STRING)
+   private BranchStatus status;
+
    @ToString.Exclude
    @EqualsAndHashCode.Exclude
    @OneToMany(mappedBy = "currentBranch")
    @JsonIgnore
    private List<Car> carsOnHand = new ArrayList<>();
-   
+
    @ToString.Exclude
    @EqualsAndHashCode.Exclude
    @JsonIgnore

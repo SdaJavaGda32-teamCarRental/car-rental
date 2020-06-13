@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import pl.sdacademy.carrental.domain.Address;
 import pl.sdacademy.carrental.domain.Branch;
+import pl.sdacademy.carrental.domain.BranchStatus;
 import pl.sdacademy.carrental.domain.Employee;
 import pl.sdacademy.carrental.domain.EmployeeRole;
 import pl.sdacademy.carrental.domain.cars.Car;
