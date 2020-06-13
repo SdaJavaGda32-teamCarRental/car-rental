@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class BranchService {
     public final static int MINIMUM_CAR_COUNT = 3;
-  
+
     private final BranchRepository branchRepository;
     private final AddressRepository addressRepository;
 
@@ -36,14 +36,8 @@ public class BranchService {
 
 
     public void createBranch(final BranchForm branchForm) {
-        final Address address = Address.builder()
-                .city(branchForm.getCity())
-                .street(branchForm.getStreet())
-                .building(branchForm.getBuilding())
-                .apartment(branchForm.getApartment())
-                .zip(branchForm.getZip())
-                .build();
-        addressRepository.save(address);
+
+        final Address address = createAddressFromBranchForm(branchForm);
 
         final Branch branch = Branch.builder()
                 .city(branchForm.getCity())
@@ -59,6 +53,17 @@ public class BranchService {
     }
 
     public void updateBranch(final Long id, final BranchForm branchForm) {
+
+        final Address address = createAddressFromBranchForm(branchForm);
+
+        final Branch branch = branchRepository.findById(id).orElseThrow();
+        branch.setAddress(address);
+        branch.setCity(address.getCity());
+        branch.setStatus(branchForm.getStatus());
+        branchRepository.save(branch);
+    }
+
+    private Address createAddressFromBranchForm(final BranchForm branchForm){
         final Address address = Address.builder()
                 .city(branchForm.getCity())
                 .street(branchForm.getStreet())
@@ -66,26 +71,30 @@ public class BranchService {
                 .apartment(branchForm.getApartment())
                 .zip(branchForm.getZip())
                 .build();
-        addressRepository.save(address);
-
-        final Branch branch = getById(id);
-        branch.setAddress(address);
-        branch.setCity(address.getCity());
-        branch.setStatus(branchForm.getStatus());
-        branchRepository.save(branch);
+        return addressRepository.save(address);
     }
 
-    public Branch getById(final Long id) {
-        return branchRepository.findById(id).orElseThrow();
+    public BranchForm getById(final Long id) {
+        final Branch branch = branchRepository.findById(id).orElseThrow();
+        final Address address = branch.getAddress();
+        return BranchForm.builder()
+                .city(address.getCity())
+                .street(address.getStreet())
+                .building(address.getBuilding())
+                .apartment(address.getApartment())
+                .zip(address.getZip())
+                .status(branch.getStatus())
+                .build();
+
     }
-    
+
     public Map<Branch, Long> getBranchesWithCarCount() {
         return getAll().stream()
-              .collect(Collectors.toMap(
-                    branch -> branch,
-                    branch -> branch.getCarsOnHand().stream()
-                          .filter(car-> car.getCurrentStatus()
-                                .equals(Status.IN)).count()));
+                .collect(Collectors.toMap(
+                        branch -> branch,
+                        branch -> branch.getCarsOnHand().stream()
+                                .filter(car -> car.getCurrentStatus()
+                                        .equals(Status.IN)).count()));
     }
 
 }

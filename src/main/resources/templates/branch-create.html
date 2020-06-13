@@ -5,6 +5,9 @@
     <title>Create branch</title>
 </head>
 <body>
+<header>
+    <nav th:replace="_components :: navigationBar"></nav>
+</header>
 <div class="branch-create-from-container">
     <form method="post" class="branch-form" th:action="@{/admin/company/branches/create}" th:object="${branchForm}">
         <p>Create branch with following data:</p>
