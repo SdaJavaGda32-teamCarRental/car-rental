@@ -16,7 +16,8 @@ import java.time.LocalDateTime;
 public class Hire {
    
    @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hire_id_seq")
+   @SequenceGenerator(name = "hire_id_seq", sequenceName = "hire_id_seq", allocationSize = 50, initialValue = 1)
    private Long id;
    
    @ManyToOne

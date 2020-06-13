@@ -17,7 +17,8 @@ import javax.validation.constraints.NotNull;
 public class Car {
    
    @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "car_id_seq")
+   @SequenceGenerator(name = "car_id_seq", sequenceName = "car_id_seq", allocationSize = 50, initialValue = 1)
    private Long id;
    
    @Column(name = "plate_number")

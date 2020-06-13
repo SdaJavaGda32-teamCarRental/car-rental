@@ -16,7 +16,8 @@ import java.util.List;
 public class Branch {
    
    @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "branch_id_seq")
+   @SequenceGenerator(name = "branch_id_seq", sequenceName = "branch_id_seq", allocationSize = 10, initialValue = 1)
    private Long id;
    
    @Column(name = "name")
