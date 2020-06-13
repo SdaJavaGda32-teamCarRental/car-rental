@@ -3,7 +3,6 @@ package pl.sdacademy.carrental.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import pl.sdacademy.carrental.domain.Branch;
 import pl.sdacademy.carrental.model.BranchForm;
 import pl.sdacademy.carrental.services.BranchService;
 import pl.sdacademy.carrental.services.CompanyService;
@@ -45,14 +44,8 @@ public class CompanyController {
 
     @GetMapping("/branches/edit/{id}")
     public String showBranchEditForm(@PathVariable final Long id, final ModelMap modelMap) {
-        final Branch branch = branchService.getById(id);
-        final BranchForm branchForm = new BranchForm(branch.getCity(),
-                branch.getAddress().getStreet(),
-                branch.getAddress().getBuilding(),
-                branch.getAddress().getApartment(),
-                branch.getAddress().getZip(),
-                branch.getStatus());
 
+        final BranchForm branchForm = branchService.getById(id);
         modelMap.addAttribute("branchForm", branchForm);
         modelMap.addAttribute("branchId", id);
         return "branch-edit";
