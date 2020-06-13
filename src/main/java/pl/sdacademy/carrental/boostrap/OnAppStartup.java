@@ -7,10 +7,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import pl.sdacademy.carrental.domain.*;
-import pl.sdacademy.carrental.domain.cars.Car;
-import pl.sdacademy.carrental.domain.cars.Color;
-import pl.sdacademy.carrental.domain.cars.FuelType;
-import pl.sdacademy.carrental.domain.cars.Status;
+import pl.sdacademy.carrental.domain.cars.*;
 import pl.sdacademy.carrental.repositories.AddressRepository;
 import pl.sdacademy.carrental.repositories.BranchRepository;
 import pl.sdacademy.carrental.repositories.CarRepository;
@@ -108,6 +105,7 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
             .make("Skoda")
             .model("Rapid")
             .fuelType(FuelType.GASOLINE)
+            .category(CarCategory.B_PLUS)
             .productionYear(2019)
             .rentPrice(99)
             .currentStatus(Status.IN)
@@ -115,6 +113,7 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
 
       final Car merc = Car.builder()
             .make("Mercedes-Benz")
+            .category(CarCategory.E)
             .model("E-Class")
             .fuelType(FuelType.DIESEL)
             .productionYear(2020)
@@ -125,6 +124,7 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
       final Car audi = Car.builder()
             .make("Audi")
             .model("A6")
+            .category(CarCategory.D_PREMIUM)
             .fuelType(FuelType.DIESEL)
             .productionYear(2010)
             .rentPrice(250)
@@ -134,6 +134,7 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
       final Car panda = Car.builder()
             .make("Fiat")
             .model("Panda")
+            .category(CarCategory.A)
             .fuelType(FuelType.GASOLINE)
             .productionYear(2018)
             .rentPrice(50)
@@ -143,6 +144,7 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
       final Car corsa = Car.builder()
             .make("Opel")
             .model("Corsa")
+            .category(CarCategory.B)
             .fuelType(FuelType.GASOLINE)
             .productionYear(2020)
             .rentPrice(120)
