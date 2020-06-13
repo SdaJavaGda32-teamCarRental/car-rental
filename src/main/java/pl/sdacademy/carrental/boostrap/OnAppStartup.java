@@ -45,14 +45,14 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
       final Address gdAddress = addressRepo.save(Address.builder()
             .street("Grunwaldzka")
             .building("12D")
-            .zip("80-053")
+            .zipCode("80-053")
             .city("Gdańsk")
             .build());
 
       final Address gdAddress2 = addressRepo.save(Address.builder()
             .street("Mickiewicza")
             .building("5F")
-            .zip("80-435")
+            .zipCode("80-435")
             .city("Gdańsk")
             .build());
       
