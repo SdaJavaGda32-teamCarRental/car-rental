@@ -11,6 +11,8 @@ import pl.sdacademy.carrental.domain.BranchStatus;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BranchForm {
+    
+    private String name;
 
     private String city;
 
