@@ -13,6 +13,7 @@ import pl.sdacademy.carrental.repositories.CarRepository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
@@ -82,10 +83,14 @@ public class BranchService {
     public Map<Branch, Long> getBranchesWithCarCount() {
         return getAll().stream()
               .collect(Collectors.toMap(
-                    branch -> branch,
-                    branch -> branch.getCarsOnHand().stream()
-                          .filter(car-> car.getCurrentStatus()
-                                .equals(Status.IN)).count()));
+                    Function.identity(),
+                    this::getAvailableCarCount));
     }
-
+    
+    private long getAvailableCarCount(final Branch branch) {
+        return branch.getCarsOnHand().stream()
+              .filter(car-> car.getCurrentStatus()
+                    .equals(Status.IN)).count();
+    }
+    
 }
