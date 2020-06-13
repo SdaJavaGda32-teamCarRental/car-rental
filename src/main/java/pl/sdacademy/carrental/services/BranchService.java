@@ -2,14 +2,12 @@ package pl.sdacademy.carrental.services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import pl.sdacademy.carrental.domain.Address;
 import pl.sdacademy.carrental.domain.Branch;
 import pl.sdacademy.carrental.domain.cars.Status;
 import pl.sdacademy.carrental.model.BranchForm;
 import pl.sdacademy.carrental.repositories.AddressRepository;
 import pl.sdacademy.carrental.repositories.BranchRepository;
-import pl.sdacademy.carrental.repositories.CarRepository;
 
 import java.util.List;
 import java.util.Map;
@@ -95,12 +93,12 @@ public class BranchService {
                     Function.identity(),
                     this::getAvailableCarCount));
 
-    }
-    
-    private long getAvailableCarCount(final Branch branch) {
-        return branch.getCarsOnHand().stream()
-              .filter(car-> car.getCurrentStatus()
-                    .equals(Status.IN)).count();
-    }
-    
+   }
+   
+   private long getAvailableCarCount(final Branch branch) {
+      return branch.getCarsOnHand().stream()
+            .filter(car -> car.getCurrentStatus()
+                  .equals(Status.IN)).count();
+   }
+   
 }

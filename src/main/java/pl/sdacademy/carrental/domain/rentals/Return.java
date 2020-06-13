@@ -2,7 +2,6 @@ package pl.sdacademy.carrental.domain.rentals;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Generated;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import pl.sdacademy.carrental.domain.Employee;

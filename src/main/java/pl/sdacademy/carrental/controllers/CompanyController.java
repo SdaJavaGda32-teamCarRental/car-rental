@@ -3,7 +3,6 @@ package pl.sdacademy.carrental.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import pl.sdacademy.carrental.domain.Branch;
 import pl.sdacademy.carrental.model.BranchForm;
 import pl.sdacademy.carrental.services.BranchService;
 import pl.sdacademy.carrental.services.CompanyService;
