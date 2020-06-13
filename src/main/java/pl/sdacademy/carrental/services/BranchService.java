@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import pl.sdacademy.carrental.domain.Address;
 import pl.sdacademy.carrental.domain.Branch;
+import pl.sdacademy.carrental.domain.cars.Status;
 import pl.sdacademy.carrental.model.BranchForm;
 import pl.sdacademy.carrental.repositories.AddressRepository;
 import pl.sdacademy.carrental.repositories.BranchRepository;
@@ -78,8 +79,13 @@ public class BranchService {
         return branchRepository.findById(id).orElseThrow();
     }
     
-    public Map<Branch, Integer> getBranchesWithCarCount() {
-        return getAll().stream().collect(Collectors.toMap(branch -> branch, branch -> branch.getCarsOnHand().size()));
+    public Map<Branch, Long> getBranchesWithCarCount() {
+        return getAll().stream()
+              .collect(Collectors.toMap(
+                    branch -> branch,
+                    branch -> branch.getCarsOnHand().stream()
+                          .filter(car-> car.getCurrentStatus()
+                                .equals(Status.IN)).count()));
     }
 
 }

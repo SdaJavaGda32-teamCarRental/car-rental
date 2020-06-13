@@ -22,7 +22,7 @@
                 <span th:text="${branch.key.address.city} + ' '"></span>
             </p>
             <p th:text="${branch.key.employees}"></p>
-            <p></p>
+            <p>Cars available: <span th:text="${branch.value}"></span></p>
             <span th:if="${branch.value < MinimumAvailableCars}">There are less than 3 cars available in this branch!</span>
         </li>
     </ol>
