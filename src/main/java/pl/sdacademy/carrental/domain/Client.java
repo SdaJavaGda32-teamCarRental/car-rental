@@ -15,7 +15,7 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity(name = "client")
+@Entity(name = "clients")
 public class Client {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
