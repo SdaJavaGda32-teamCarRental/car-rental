@@ -83,7 +83,7 @@ public class BranchService {
                 .street(address.getStreet())
                 .building(address.getBuilding())
                 .apartment(address.getApartment())
-                .zip(address.getZip())
+                .zipCode(address.getZipCode())
                 .status(branch.getStatus())
                 .build();
 
