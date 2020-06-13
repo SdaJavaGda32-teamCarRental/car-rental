@@ -12,5 +12,6 @@ public interface CarRepository extends JpaRepository<Car, Long> {
    Optional<Car> findCarByPlateNumber(String plateNumber);
    
    List<Car> findCarsByCurrentStatusEquals(Status status);
-
+   
+   
 }

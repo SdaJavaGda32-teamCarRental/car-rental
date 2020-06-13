@@ -1,6 +1,8 @@
 package pl.sdacademy.carrental.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,44 +13,24 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Entity(name = "company")
 public class Company {
-    private static Company INSTANCE;
+   private static Company INSTANCE;
 
-    @Id
-    @NotNull
-    @Column(name = "company_name")
-    private String name;
+   @Id
+   @NotNull
+   @Column(name = "company_name")
+   private String name;
 
-    @NotNull
-    @Column(name = "company_domain")
-    private String domain;
+   @NotNull
+   @Column(name = "company_domain")
+   private String domain;
 
+   @NotNull
+   @OneToOne
+   @JoinColumn(name = "address_id")
+   private Address address;
 
-    //Adres w Company - może dodać po prostu te pola, a nie jako odniesienie do Address? Bo OneToOne nie może być
-    //jednocześnie kiedy jest Address w Branch
-//    @NotNull
-//    @OneToOne
-//    @Column(name = "company_address")
-//    private Address address;
-
-    @Column(name = "company_street")
-    private String street;
-
-    @Column(name = "company_building")
-    private String building;
-
-    @Column(name = "company_apartment")
-    private String apartment;
-
-    @Column(name = "company_zip_code")
-    private String zip;
-
-    @Column(name = "company_city")
-    private String city;
-
-
-
-    @Column(name = "company_logotype")
-    private String logotype;
+   @Column(name = "company_logotype")
+   private String logotype;
 
 //    @ToString.Exclude
 //    @EqualsAndHashCode.Exclude
