@@ -58,12 +58,12 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
       
       final Branch gdansk = branchRepo.save(Branch.builder()
             .address(gdAddress)
-            .city("Gdańsk")
+            .name("Gdańsk")
             .build());
 
       final Branch gdansk2 = branchRepo.save(Branch.builder()
             .address(gdAddress2)
-            .city("Gdańsk")
+            .name("Gdańsk")
             .build());
       
       final Car skoda = Car.builder()
