@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import pl.sdacademy.carrental.domain.Address;
 import pl.sdacademy.carrental.domain.Branch;
-import pl.sdacademy.carrental.domain.BranchStatus;
 import pl.sdacademy.carrental.domain.Employee;
 import pl.sdacademy.carrental.domain.EmployeeRole;
 import pl.sdacademy.carrental.domain.cars.Car;
@@ -113,6 +112,18 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
             .currentBranch(gdansk)
             .build();
       
+      final Car corsa = Car.builder()
+            .make("Opel")
+            .model("Corsa")
+            .fuelType(FuelType.GASOLINE)
+            .productionYear(2020)
+            .plateNumber("GD6232T")
+            .color("Yellow")
+            .rentPrice(120)
+            .currentStatus(Status.IN)
+            .currentBranch(gdansk)
+            .build();
+      
       final Employee marek = Employee.builder()
             .firstName("Marek")
             .lastName("Kowalski")
@@ -131,7 +142,8 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
             skoda,
             merc,
             audi,
-            panda));
+            panda,
+            corsa));
 
       employeeRepo.saveAll(List.of(
             marek,

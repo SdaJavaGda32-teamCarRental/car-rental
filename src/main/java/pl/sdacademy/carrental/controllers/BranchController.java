@@ -24,7 +24,7 @@ public class BranchController {
    
    @GetMapping("/list-branches")
    public String listAllBranches(final Model model) {
-      final Map<Branch, Integer> branchesWithCarCount = branchService.getBranchesWithCarCount();
+      final Map<Branch, Long> branchesWithCarCount = branchService.getBranchesWithCarCount();
       model.addAttribute("branchList", branchesWithCarCount);
       model.addAttribute("MinimumAvailableCars", BranchService.MINIMUM_CAR_COUNT);
       return "branches-list";

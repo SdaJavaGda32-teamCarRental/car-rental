@@ -37,7 +37,11 @@ public class Car {
    private String color;
    
    @NotNull
+   @Column(name = "price")
    private int rentPrice;
+   
+   @Column(name = "mileage")
+   private int mileage;
    
    @ManyToOne
    @JoinColumn(name = "branch_id")
@@ -47,4 +51,10 @@ public class Car {
    @Enumerated(EnumType.STRING)
    private Status currentStatus;
    
+   @Enumerated(EnumType.STRING)
+   @Column(name = "category")
+   private CarCategory category;
+   
+   @Column(name = "transmission_auto")
+   private boolean isAutomatic;
 }
