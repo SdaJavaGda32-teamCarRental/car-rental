@@ -45,8 +45,8 @@ public class CompanyController {
 
     @GetMapping("/branches/edit/{id}")
     public String showBranchEditForm(@PathVariable final Long id, final ModelMap modelMap) {
-        final BranchForm branchForm = branchService.getById(id);
 
+        final BranchForm branchForm = branchService.getById(id);
         modelMap.addAttribute("branchForm", branchForm);
         modelMap.addAttribute("branchId", id);
         return "branch-edit";

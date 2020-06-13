@@ -28,7 +28,7 @@ public class Address {
    private String apartment;
    
    @Column(name = "zip_code")
-   private String zip;
+   private String zipCode;
    
    @Column(name = "city")
    private String city;

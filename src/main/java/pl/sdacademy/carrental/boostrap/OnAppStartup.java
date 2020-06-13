@@ -1,6 +1,7 @@
 package pl.sdacademy.carrental.boostrap;
 
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ import pl.sdacademy.carrental.repositories.EmployeeRepository;
 import java.util.List;
 
 
+@Profile("dev")
 @Component
 @Transactional
 public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> {
@@ -43,14 +45,14 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
       final Address gdAddress = addressRepo.save(Address.builder()
             .street("Grunwaldzka")
             .building("12D")
-            .zip("80-053")
+            .zipCode("80-053")
             .city("Gdańsk")
             .build());
 
       final Address gdAddress2 = addressRepo.save(Address.builder()
             .street("Mickiewicza")
             .building("5F")
-            .zip("80-435")
+            .zipCode("80-435")
             .city("Gdańsk")
             .build());
       
