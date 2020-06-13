@@ -22,7 +22,7 @@ public class Branch {
    
    @OneToOne
    private Address address;
-   
+
    @Enumerated(EnumType.STRING)
    private BranchStatus status;
 
@@ -37,5 +37,4 @@ public class Branch {
    @JsonIgnore
    @OneToMany(mappedBy = "branch")
    private List<Employee> employees = new ArrayList<>();
-
 }
