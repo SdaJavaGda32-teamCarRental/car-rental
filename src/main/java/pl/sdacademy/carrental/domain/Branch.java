@@ -19,8 +19,8 @@ public class Branch {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
    
-   @Column(name = "city")
-   private String city;
+   @Column(name = "name")
+   private String name;
    
    @OneToOne
    @JoinColumn(name = "address_id")

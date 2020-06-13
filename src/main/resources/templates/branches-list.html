@@ -11,7 +11,7 @@
     <p>Branches:</p>
     <ol>
         <li th:id="${branch.key.id}" th:each="branch : ${branchList}">
-            <p th:text="${branch.key.city}"></p>
+            <p th:text="${branch.key.name}"></p>
             <p>
                 <span th:text="${branch.key.address.street} + ' '"></span>
                 <span th:text="${branch.key.address.building} + ' '"></span>
