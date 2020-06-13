@@ -1,6 +1,7 @@
 package pl.sdacademy.carrental.boostrap;
 
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ import pl.sdacademy.carrental.repositories.EmployeeRepository;
 import java.util.List;
 
 
+@Profile("dev")
 @Component
 @Transactional
 public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> {
