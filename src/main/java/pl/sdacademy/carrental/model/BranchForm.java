@@ -1,13 +1,12 @@
 package pl.sdacademy.carrental.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.sdacademy.carrental.domain.BranchStatus;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

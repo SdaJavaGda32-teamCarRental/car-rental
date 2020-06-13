@@ -5,6 +5,9 @@
     <title>Edit branch</title>
 </head>
 <body>
+<header>
+    <nav th:replace="_components :: navigationBar"></nav>
+</header>
 <div class="branch-edit-from-container">
     <form method="post" class="branch-form" th:action="@{/admin/company/branches/edit/__${branchId}__}"
           th:object="${branchForm}">
