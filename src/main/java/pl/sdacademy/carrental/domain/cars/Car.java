@@ -38,7 +38,8 @@ public class Car {
    private FuelType fuelType;
    
    @Column(name = "color")
-   private String color;
+   @Enumerated(EnumType.STRING)
+   private Color color;
    
    @NotNull
    @Column(name = "price")
