@@ -5,10 +5,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import pl.sdacademy.carrental.domain.Address;
-import pl.sdacademy.carrental.domain.Branch;
-import pl.sdacademy.carrental.domain.Employee;
-import pl.sdacademy.carrental.domain.EmployeeRole;
+import pl.sdacademy.carrental.domain.*;
 import pl.sdacademy.carrental.domain.cars.Car;
 import pl.sdacademy.carrental.domain.cars.FuelType;
 import pl.sdacademy.carrental.domain.cars.Status;
@@ -59,11 +56,13 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
       final Branch gdansk = branchRepo.save(Branch.builder()
             .address(gdAddress)
             .name("Gdańsk")
+            .status(BranchStatus.OPEN)
             .build());
 
       final Branch gdansk2 = branchRepo.save(Branch.builder()
             .address(gdAddress2)
             .name("Gdańsk")
+            .status(BranchStatus.OPEN)
             .build());
       
       final Car skoda = Car.builder()

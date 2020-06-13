@@ -39,7 +39,7 @@ public class BranchService {
         final Address address = createAddressFromBranchForm(branchForm);
 
         final Branch branch = Branch.builder()
-                .name(branchForm.getCity())
+                .name(branchForm.getName())
                 .address(address)
                 .status(branchForm.getStatus())
                 .build();
