@@ -164,13 +164,14 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
                            .fuelType(template.getFuelType())
                            .productionYear(template.getProductionYear())
                            .rentPrice(template.getRentPrice())
+                           .category(template.getCategory())
                            .currentStatus(template.getCurrentStatus())
                            .mileage(new Random().nextInt(20000))
                            .currentBranch(branch)
                            .plateNumber("GD"
                                  + RandomStringUtils.randomNumeric(3)
                                  + RandomStringUtils.randomAlphanumeric(2).toUpperCase())
-                           .color(Color.values()[new Random().nextInt(Color.values().length)].toString())
+                           .color(Color.values()[new Random().nextInt(Color.values().length)])
                            .isAutomatic(new Random().nextBoolean())
                            .build()
                );
