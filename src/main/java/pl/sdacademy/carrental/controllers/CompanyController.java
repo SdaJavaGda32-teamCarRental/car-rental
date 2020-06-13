@@ -50,7 +50,7 @@ public class CompanyController {
                 branch.getAddress().getStreet(),
                 branch.getAddress().getBuilding(),
                 branch.getAddress().getApartment(),
-                branch.getAddress().getZip(),
+                branch.getAddress().getZipCode(),
                 branch.getStatus());
 
         modelMap.addAttribute("branchForm", branchForm);

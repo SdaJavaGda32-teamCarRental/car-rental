@@ -42,7 +42,7 @@ public class BranchService {
                 .street(branchForm.getStreet())
                 .building(branchForm.getBuilding())
                 .apartment(branchForm.getApartment())
-                .zip(branchForm.getZip())
+                .zipCode(branchForm.getZipCode())
                 .build();
         addressRepository.save(address);
 
@@ -65,7 +65,7 @@ public class BranchService {
                 .street(branchForm.getStreet())
                 .building(branchForm.getBuilding())
                 .apartment(branchForm.getApartment())
-                .zip(branchForm.getZip())
+                .zipCode(branchForm.getZipCode())
                 .build();
         addressRepository.save(address);
 

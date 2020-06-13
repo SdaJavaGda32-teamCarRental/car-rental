@@ -17,7 +17,7 @@
         <p th:text="'Street: ' + ${branch.getAddress().getStreet()}"></p>
         <p th:text="'Building: ' + ${branch.getAddress().getBuilding()}"></p>
         <p th:text="'Apartment: ' + ${branch.getAddress().getApartment()}"></p>
-        <p th:text="'Zip: ' + ${branch.getAddress().getZip()}"></p>
+        <p th:text="'Zip Code: ' + ${branch.getAddress().getZipCode()}"></p>
         <p th:text="'Status: ' + ${branch.getStatus()}"></p>
 
         <form method="get" th:action="@{/admin/company/branches/edit/__${branch.getId()}__}">

@@ -21,7 +21,7 @@ public class BranchForm {
 
     private String apartment;
 
-    private String zip;
+    private String zipCode;
 
     private BranchStatus status;
 
