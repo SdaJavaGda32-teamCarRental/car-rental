@@ -44,6 +44,7 @@ public class Car {
    private Branch currentBranch;
    
    @Column(name = "status")
+   @Enumerated(EnumType.STRING)
    private Status currentStatus;
    
 }
