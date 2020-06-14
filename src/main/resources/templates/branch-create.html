@@ -12,6 +12,10 @@
     <form method="post" class="branch-form" th:action="@{/admin/company/branches/create}" th:object="${branchForm}">
         <p>Create branch with following data:</p>
         <label>
+            Name
+            <input type="text" th:field="*{name}">
+        </label>
+        <label>
             City
             <input type="text" th:field="*{city}">
         </label>

@@ -13,6 +13,11 @@
           th:object="${branchForm}">
         <p>Edit branch with following data:</p>
         <label>
+            Name
+            <input type="text" th:field="*{name}">
+        </label>
+
+        <label>
             City
             <input type="text" th:field="*{city}">
         </label>

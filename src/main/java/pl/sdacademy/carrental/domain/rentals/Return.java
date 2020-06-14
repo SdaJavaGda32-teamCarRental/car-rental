@@ -16,7 +16,8 @@ import java.time.LocalDateTime;
 public class Return {
    
    @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "return_id_seq")
+   @SequenceGenerator(name = "return_id_seq", sequenceName = "return_id_seq", allocationSize = 50, initialValue = 1)
    private Long id;
    
    @ManyToOne
