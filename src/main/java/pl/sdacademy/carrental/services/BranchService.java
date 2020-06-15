@@ -10,6 +10,7 @@ import pl.sdacademy.carrental.model.BranchForm;
 import pl.sdacademy.carrental.repositories.AddressRepository;
 import pl.sdacademy.carrental.repositories.BranchRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -38,6 +39,9 @@ public class BranchService {
     public void createBranch(final BranchForm branchForm) {
 
         final Address address = createAddressFromBranchForm(branchForm);
+        throwIfBranchWithGivenAddressExists(address);
+
+        addressRepository.save(address);
 
         final Branch branch = Branch.builder()
                 .name(branchForm.getName())
@@ -48,24 +52,43 @@ public class BranchService {
     }
 
     public void delete(final Long id) {
-        final Branch branch = branchRepository.findById(id).orElseThrow(() ->
-                new BranchException("No branch with id " + id + " found."));
 
-        if (!branch.getCarsOnHand().isEmpty()) {
-            throw new BranchException("Cannot remove a branch with assigned car(s).");
-        }
-        if (!branch.getEmployees().isEmpty()){
-            throw new BranchException("Cannot remove a branch with assigned employee(s).");
-        }
+        final Branch branch = findExistingById(id);
+        final Address address = branch.getAddress();
+
+        throwIfBranchHasCarsOrEmployees(branch);
 
         branchRepository.delete(branch);
+        addressRepository.delete(address);
+    }
+
+    private Branch findExistingById(final Long id) {
+        return branchRepository.findById(id).orElseThrow(() ->
+                new BranchException("No branch with id " + id + " found."));
+    }
+
+    private void throwIfBranchHasCarsOrEmployees(final Branch branch) {
+        boolean isDeletable = true;
+        String expMessage = "";
+        if (!branch.getCarsOnHand().isEmpty()) {
+            isDeletable = false;
+            expMessage += ("Cannot remove a branch with assigned car(s). ");
+        }
+        if (!branch.getEmployees().isEmpty()) {
+            isDeletable = false;
+            expMessage += ("Cannot remove a branch with assigned employee(s).");
+        }
+        if (!isDeletable) {
+            throw new BranchException(expMessage);
+        }
     }
 
     public void updateBranch(final Long id, final BranchForm branchForm) {
 
         final Address address = createAddressFromBranchForm(branchForm);
+        addressRepository.save(address);
 
-        final Branch branch = branchRepository.findById(id).orElseThrow();
+        final Branch branch = findExistingById(id);
         branch.setAddress(address);
         branch.setName(branchForm.getName());
         branch.setStatus(branchForm.getStatus());
@@ -73,18 +96,31 @@ public class BranchService {
     }
 
     private Address createAddressFromBranchForm(final BranchForm branchForm) {
-        final Address address = Address.builder()
+        return Address.builder()
                 .city(branchForm.getCity())
                 .street(branchForm.getStreet())
                 .building(branchForm.getBuilding())
                 .apartment(branchForm.getApartment())
                 .zipCode(branchForm.getZipCode())
                 .build();
-        return addressRepository.save(address);
+    }
+
+    private void throwIfBranchWithGivenAddressExists(final Address address) {
+
+        addressRepository.findAll().stream()
+                .filter(adrs ->
+                        adrs.getCity().equals(address.getCity())
+                                && adrs.getZipCode().equals(address.getZipCode())
+                                && adrs.getStreet().equals(address.getStreet())
+                                && adrs.getBuilding().equals(address.getBuilding())
+                                && adrs.getApartment().equals(address.getApartment()))
+                .findFirst().ifPresent(a -> {
+            throw new BranchException("A branch with this address" + address.toString() + "already exists.");
+        });
     }
 
     public BranchForm getById(final Long id) {
-        final Branch branch = branchRepository.findById(id).orElseThrow();
+        final Branch branch = findExistingById(id);
         final Address address = branch.getAddress();
         return BranchForm.builder()
                 .city(address.getCity())
