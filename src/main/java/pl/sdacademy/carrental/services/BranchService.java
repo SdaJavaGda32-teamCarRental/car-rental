@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.sdacademy.carrental.domain.Address;
 import pl.sdacademy.carrental.domain.Branch;
 import pl.sdacademy.carrental.domain.cars.Status;
+import pl.sdacademy.carrental.exceptions.BranchException;
 import pl.sdacademy.carrental.model.BranchForm;
 import pl.sdacademy.carrental.repositories.AddressRepository;
 import pl.sdacademy.carrental.repositories.BranchRepository;
@@ -47,7 +48,16 @@ public class BranchService {
     }
 
     public void delete(final Long id) {
-        final Branch branch = branchRepository.findById(id).orElseThrow();
+        final Branch branch = branchRepository.findById(id).orElseThrow(() ->
+                new BranchException("No branch with id " + id + " found."));
+
+        if (!branch.getCarsOnHand().isEmpty()) {
+            throw new BranchException("Cannot remove a branch with assigned car(s).");
+        }
+        if (!branch.getEmployees().isEmpty()){
+            throw new BranchException("Cannot remove a branch with assigned employee(s).");
+        }
+
         branchRepository.delete(branch);
     }
 
@@ -62,7 +72,7 @@ public class BranchService {
         branchRepository.save(branch);
     }
 
-    private Address createAddressFromBranchForm(final BranchForm branchForm){
+    private Address createAddressFromBranchForm(final BranchForm branchForm) {
         final Address address = Address.builder()
                 .city(branchForm.getCity())
                 .street(branchForm.getStreet())
@@ -89,16 +99,16 @@ public class BranchService {
 
     public Map<Branch, Long> getBranchesWithCarCount() {
         return getAll().stream()
-              .collect(Collectors.toMap(
-                    Function.identity(),
-                    this::getAvailableCarCount));
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        this::getAvailableCarCount));
 
-   }
-   
-   private long getAvailableCarCount(final Branch branch) {
-      return branch.getCarsOnHand().stream()
-            .filter(car -> car.getCurrentStatus()
-                  .equals(Status.IN)).count();
-   }
-   
+    }
+
+    private long getAvailableCarCount(final Branch branch) {
+        return branch.getCarsOnHand().stream()
+                .filter(car -> car.getCurrentStatus()
+                        .equals(Status.IN)).count();
+    }
+
 }
