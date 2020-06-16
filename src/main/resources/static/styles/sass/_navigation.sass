@@ -1,12 +1,17 @@
 .navbar
-  background-color: #4285F4
+  background-color: rgba(0, 0, 0, 0.3)
+  backdrop-filter: blur(10px)
+  height: 70px
+  transition: 400ms
+
 
 .top-nav-collapse
-  background-color: #4285F4
+  background-color: $color-primary
+  height: 50px
 
 @media only screen and (max-width: 768px)
   .navbar
-    background-color: #4285F4
+    background-color: $color-primary
 
 body
   margin-top: 70px

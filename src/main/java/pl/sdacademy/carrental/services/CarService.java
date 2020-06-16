@@ -2,6 +2,7 @@ package pl.sdacademy.carrental.services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.sdacademy.carrental.domain.Branch;
 import pl.sdacademy.carrental.domain.cars.Car;
 import pl.sdacademy.carrental.domain.cars.Status;
 import pl.sdacademy.carrental.repositories.CarRepository;
@@ -40,5 +41,10 @@ public class CarService {
          throw new RuntimeException("Mileage cannot be lower than it was : " + carToUpdate.getMileage());
       }
       return carRepo.save(carToUpdate);
+   }
+   
+   public void transfer(final Car car, final Branch destination) {
+      car.setCurrentBranch(destination);
+      carRepo.save(car);
    }
 }

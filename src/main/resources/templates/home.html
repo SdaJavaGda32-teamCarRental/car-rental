@@ -8,10 +8,45 @@
 
 <header>
    <nav th:replace="_components :: navigationBar"></nav>
+   <main class="view intro-image">
+
+      <section class="form-wrapper">
+         <h1 th:text="#{reservation.form.title}"></h1>
+         <form class="vert-form" method="post" th:action="@{/reservation}" th:object="${carReservationRequest}">
+            <div class="form-group-vertical">
+               <label for="pickup_branch" th:text="#{reservation.form.pickup.branch}"></label>
+               <select name="pickupBranchName" required id="pickup_branch" th:field="*{pickupBranchName}">
+                  <option disabled hidden selected value="">select pickup branch…</option>
+                  <option th:each="branch : ${branchList}" th:value="${branch.getName()}"
+                          th:text="${branch.getName()}"></option>
+               </select>
+            </div>
+
+            <div class="form-group-vertical">
+               <label for="pickup_date" th:text="#{reservation.form.pickup.date}"></label>
+               <input type="date" required name="pickupDate" id="pickup_date" th:attr="min=${today}, value=${today}"
+                      th:field="*{pickupDate}">
+            </div>
+
+            <div class="form-group-vertical">
+               <label for="return_branch" th:text="#{reservation.form.return.branch}"></label>
+               <select name="returnBranchName" required id="return_branch" th:field="*{returnBranchName}">
+                  <option disabled hidden selected value="">select return branch…</option>
+                  <option th:each="branch : ${branchList}" th:value="${branch.getName()}"
+                          th:text="${branch.getName()}"></option>
+               </select>
+            </div>
+
+            <div class="form-group-vertical">
+               <label for="return_date" th:text="#{reservation.form.return.date}"></label>
+               <input type="date" required name="returnDate" th:attr="min=${today}, value=${today.plusWeeks(1)}"
+                      id="return_date" th:field="*{returnDate}">
+            </div>
+            <button type="submit" th:text="#{reservation.form.submit}"></button>
+         </form>
+      </section>
+
+   </main>
 </header>
-
-   <h1>Hello from 'Car Rental Service'!</h1>
-
-
 </body>
 </html>

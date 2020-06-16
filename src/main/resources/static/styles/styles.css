@@ -14,20 +14,73 @@ h1 {
 }
 
 .navbar {
-  background-color: #4285F4;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  height: 70px;
+  transition: 400ms;
 }
 
 .top-nav-collapse {
-  background-color: #4285F4;
+  background-color: #26680d;
+  height: 50px;
 }
 
 @media only screen and (max-width: 768px) {
   .navbar {
-    background-color: #4285F4;
+    background-color: #26680d;
   }
 }
 body {
   margin-top: 70px;
+}
+
+header main.intro-image {
+  background-image: url("/img/road-view.jpg");
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  min-height: 110vh;
+  margin-top: -70px;
+  position: relative;
+}
+header main.intro-image section.form-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(0, -50%);
+  display: flex;
+  width: 30%;
+  height: 50vh;
+  padding: 20px;
+  border-radius: 10px;
+  flex-flow: column;
+  background-color: #fff;
+  filter: drop-shadow(0px 30px 10px rgba(0, 0, 0, 0.7));
+}
+header main.intro-image form.vert-form {
+  display: flex;
+  flex-flow: column;
+  flex-grow: 1;
+  justify-content: space-around;
+}
+header main.intro-image form.vert-form .form-group-vertical {
+  display: flex;
+  flex-flow: column;
+}
+header main.intro-image form.vert-form select, header main.intro-image form.vert-form input {
+  padding: 10px 5px;
+  border-radius: 5px;
+  border: 1px solid #555;
+}
+header main.intro-image form.vert-form button {
+  padding: 5px;
+  background-color: #26680d;
+  font-family: Anton, sans-serif;
+  font-size: 1.5em;
+  letter-spacing: 1.5px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
 }
 
 /*# sourceMappingURL=styles.css.map */
