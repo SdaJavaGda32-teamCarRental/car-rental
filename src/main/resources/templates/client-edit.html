@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit client:</title>
+</head>
+<body>
+<header>
+    <nav th:replace="_components :: navigationBar"></nav>
+</header>
+<div class="client-edit-from-container">
+    <form method="post" class="client-form" th:action="@{/admin/clients/edit/__${clientId}__}"
+          th:object="${clientForm}">
+        <p>Edit client with following data:</p>
+        <label>
+            First Name
+            <input type="text" th:field="*{firstName}">
+        </label>
+        <label>
+            Last Name
+            <input type="text" th:field="*{lastName}">
+        </label>
+
+        <label>
+            Email
+            <input type="text" th:field="*{email}">
+        </label>
+
+        <label>
+            City
+            <input type="text" th:field="*{city}">
+        </label>
+        <label>
+            Street
+            <input type="text" th:field="*{street}">
+        </label>
+        <label>
+            Building:
+            <input type="text" th:field="*{building}">
+        </label>
+        <label>
+            Apartment no.
+            <input type="text" th:field="*{apartment}">
+        </label>
+        <label>
+            Zip code
+            <input type="text" th:field="*{zipCode}">
+        </label>
+        <button type="submit">
+            Edit client
+        </button>
+    </form>
+</div>
+
+<form method="get" th:action="@{/admin/clients}">
+    <button type="submit">Back to the client list</button>
+</form>
+
+</body>
+</html>
