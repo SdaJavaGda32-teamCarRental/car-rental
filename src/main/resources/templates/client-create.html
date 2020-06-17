@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <div th:replace="_components :: headTags"></div>
     <meta charset="UTF-8">
     <title>Add client:</title>
 </head>
@@ -23,7 +24,7 @@
         <p></p>
         <label>
             Email
-            <input type="text" th:field="*{email}">
+            <input type="email" th:field="*{email}">
         </label>
         <p></p>
         <label>
@@ -52,18 +53,15 @@
         </label>
         <label>
             Phone number
-            <input type="text" th:field="*{phoneNumber}">
+            <input type="text" pattern="\d{9}" th:field="*{phoneNumber}">
         </label>
         <p></p>
         <button type="submit">
             Sign up
         </button>
+        <p></p>
     </form>
 </div>
-<p></p>
-<form method="get" th:action="@{/admin/clients}">
-    <button type="submit">Back to the client list</button>
-</form>
-
 </body>
+<a th:href="@{/admin/clients}">Back to the client list</a>
 </html>

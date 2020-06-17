@@ -13,16 +13,16 @@ import pl.sdacademy.carrental.services.ClientService;
 
 @Controller
 @RequestMapping("/admin/clients")
-public class ClientController {
+public class AdminSideClientController {
 
     private final ClientService clientService;
 
-    public ClientController(final ClientService clientService) {
+    public AdminSideClientController(final ClientService clientService) {
         this.clientService = clientService;
     }
 
 
-    @GetMapping("/")
+    @GetMapping()
     public String listAllClients(final ModelMap modelMap) {
         modelMap.addAttribute("clients", clientService.getAll());
         return "clients";
@@ -37,13 +37,13 @@ public class ClientController {
     @PostMapping("/create")
     public String handleNewClient(@ModelAttribute(name = "clientForm") final ClientForm clientForm) {
         clientService.createClient(clientForm);
-        return "redirect:/admin/clients/";
+        return "redirect:/admin/clients";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteClient(@PathVariable final Long id) {
         clientService.delete(id);
-        return "redirect:/admin/clients/";
+        return "redirect:/admin/clients";
     }
 
     @GetMapping("/edit/{id}")
@@ -58,6 +58,6 @@ public class ClientController {
     @PostMapping("/edit/{id}")
     public String handleClientEdit(@PathVariable final Long id, @ModelAttribute(name = "branchForm") final ClientForm clientForm) {
         clientService.updateClient(id, clientForm);
-        return "redirect:/admin/clients/";
+        return "redirect:/admin/clients";
     }
 }

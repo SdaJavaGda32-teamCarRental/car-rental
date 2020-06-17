@@ -56,6 +56,8 @@ public class ClientService {
         clientRepository.save(client);
     }
 
+
+
     private Address createAddressFromClientForm(final ClientForm clientForm){
         final Address address = Address.builder()
                 .city(clientForm.getCity())
@@ -66,9 +68,6 @@ public class ClientService {
                 .build();
         return addressRepository.save(address);
     }
-    // I don't know if saving both branch and client address to the same repository is a good idea
-    // Split, refactor AddressRepository to ClientAddressRepository and BranchAddressRepository?
-    // same with Address entity? What do you think?
 
     public ClientForm getById(final Long id) {
         final Client client = clientRepository.findById(id).orElseThrow();
