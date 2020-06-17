@@ -12,45 +12,52 @@
 <div class="client-edit-from-container">
     <form method="post" class="client-form" th:action="@{/admin/clients/edit/__${clientId}__}"
           th:object="${clientForm}">
-        <p>Edit client with following data:</p>
+        <title>Edit client with following data:</title>
         <label>
             First Name
-            <input type="text" th:field="*{firstName}">
+            <input type="text" title="First name" th:field="*{firstName}" required>
         </label>
+        <p></p>
         <label>
-            Last Name
-            <input type="text" th:field="*{lastName}">
+            Last name
+            <input type="text" title="Last name" th:field="*{lastName}" required>
         </label>
-
+        <p></p>
         <label>
             Email
-            <input type="email" th:field="*{email}">
+            <input type="email" title="Email" th:field="*{email}" required>
         </label>
-
+        <p></p>
         <label>
             City
-            <input type="text" th:field="*{city}">
+            <input type="text" title="City" th:field="*{city}" required>
         </label>
+        <p></p>
         <label>
             Street
-            <input type="text" th:field="*{street}">
+            <input type="text" title="Street" th:field="*{street}" required>
         </label>
+        <p></p>
         <label>
-            Building:
-            <input type="text" th:field="*{building}">
+            Building
+            <input type="text" title="Building" th:field="*{building}" required>
         </label>
+        <p></p>
         <label>
             Apartment no.
-            <input type="text" th:field="*{apartment}">
+            <input type="text" title="Apartment no." th:field="*{apartment}" required>
         </label>
+        <p></p>
         <label>
             Zip code
-            <input type="text" th:field="*{zipCode}">
+            <input type="text" title="Zip code" th:field="*{zipCode}" required>
         </label>
+        <p></p>
         <label>
-            Phone number
-            <input type="text" pattern="\d{9}" th:field="*{phoneNumber}">
+            Phone Number
+            <input type="text" pattern="\d{9}" title="Phone Number" th:field="*{phoneNumber}" required>
         </label>
+        <p></p>
         <button type="submit">
             Edit client
         </button>

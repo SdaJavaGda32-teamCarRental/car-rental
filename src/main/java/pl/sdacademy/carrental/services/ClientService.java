@@ -8,6 +8,8 @@ import pl.sdacademy.carrental.model.ClientForm;
 import pl.sdacademy.carrental.repositories.AddressRepository;
 import pl.sdacademy.carrental.repositories.ClientRepository;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -69,14 +71,16 @@ public class ClientService {
         return addressRepository.save(address);
     }
 
-    public ClientForm getById(final Long id) {
-        final Client client = clientRepository.findById(id).orElseThrow();
+    public ClientForm getById(final Long id) throws IOException {
+        final Client client = clientRepository.findById(id).orElseThrow(IOException::new);
         final Address address = client.getAddress();
         return ClientForm.builder()
                 .firstName(client.getFirstName())
                 .lastName(client.getLastName())
+                .email(client.getEmail())
                 .city(address.getCity())
                 .street(address.getStreet())
+                .building(address.getBuilding())
                 .apartment(address.getApartment())
                 .zipCode(address.getZipCode())
                 .phoneNumber(client.getPhoneNumber())

@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import pl.sdacademy.carrental.model.ClientForm;
 import pl.sdacademy.carrental.services.ClientService;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 // (PIOTR) i'm not sure how to split admin-only methods and those available for users. From what i understand with Profile button you can
 // check your own profile as a certain user, but users list should be available only for admins? So different controller
 // for everything single user related?
@@ -22,7 +25,7 @@ public class AdminSideClientController {
     }
 
 
-    @GetMapping()
+    @GetMapping
     public String listAllClients(final ModelMap modelMap) {
         modelMap.addAttribute("clients", clientService.getAll());
         return "clients";
@@ -47,7 +50,7 @@ public class AdminSideClientController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showClientEditForm(@PathVariable final Long id, final ModelMap modelMap) {
+    public String showClientEditForm(@PathVariable final Long id, final ModelMap modelMap) throws IOException {
 
         final ClientForm clientForm = clientService.getById(id);
         modelMap.addAttribute("clientForm", clientForm);
