@@ -91,9 +91,13 @@ public class BranchService {
         final Address originalAddress = branch.getAddress();
 
         final Address address = createAddressFromBranchForm(branchForm);
-        addressRepository.save(address);
-        //TODO delete original address from DB if the new one is actually new
-        branch.setAddress(address);
+
+        if (!address.equals(originalAddress)) {
+            addressRepository.save(address);
+            branch.setAddress(address);
+            addressRepository.delete(originalAddress);
+        }
+
         branch.setName(branchForm.getName());
         branch.setStatus(branchForm.getStatus());
         branchRepository.save(branch);
