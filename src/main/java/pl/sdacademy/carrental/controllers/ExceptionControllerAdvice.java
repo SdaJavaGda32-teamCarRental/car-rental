@@ -12,7 +12,7 @@ public class ExceptionControllerAdvice {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public List<String> handleException(final Exception exp){
-        return List.of(exp.getMessage());
+    public String handleException(final Exception exp) {
+        return exp.getMessage();
     }
 }

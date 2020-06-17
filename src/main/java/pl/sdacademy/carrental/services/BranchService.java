@@ -1,5 +1,7 @@
 package pl.sdacademy.carrental.services;
 
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.sdacademy.carrental.domain.Address;
@@ -72,11 +74,11 @@ public class BranchService {
         String expMessage = "";
         if (!branch.getCarsOnHand().isEmpty()) {
             isDeletable = false;
-            expMessage += ("Cannot remove a branch with assigned car(s). ");
+            expMessage += "Cannot remove a branch with assigned car(s). ";
         }
         if (!branch.getEmployees().isEmpty()) {
             isDeletable = false;
-            expMessage += ("Cannot remove a branch with assigned employee(s).");
+            expMessage += "Cannot remove a branch with assigned employee(s).";
         }
         if (!isDeletable) {
             throw new BranchException(expMessage);
@@ -85,10 +87,12 @@ public class BranchService {
 
     public void updateBranch(final Long id, final BranchForm branchForm) {
 
+        final Branch branch = findExistingById(id);
+        final Address originalAddress = branch.getAddress();
+
         final Address address = createAddressFromBranchForm(branchForm);
         addressRepository.save(address);
-
-        final Branch branch = findExistingById(id);
+        //TODO delete original address from DB if the new one is actually new
         branch.setAddress(address);
         branch.setName(branchForm.getName());
         branch.setStatus(branchForm.getStatus());
@@ -106,16 +110,13 @@ public class BranchService {
     }
 
     private void throwIfBranchWithGivenAddressExists(final Address address) {
-
-        addressRepository.findAll().stream()
-                .filter(adrs ->
-                        adrs.getCity().equals(address.getCity())
-                                && adrs.getZipCode().equals(address.getZipCode())
-                                && adrs.getStreet().equals(address.getStreet())
-                                && adrs.getBuilding().equals(address.getBuilding())
-                                && adrs.getApartment().equals(address.getApartment()))
+        addressRepository.findExistingAddress(address.getCity(),
+                address.getZipCode(),
+                address.getStreet(),
+                address.getBuilding(),
+                address.getApartment()).stream()
                 .findFirst().ifPresent(a -> {
-            throw new BranchException("A branch with this address" + address.toString() + "already exists.");
+            throw new BranchException("A branch with this address: " + address.toString() + " already exists.");
         });
     }
 
@@ -130,7 +131,6 @@ public class BranchService {
                 .zipCode(address.getZipCode())
                 .status(branch.getStatus())
                 .build();
-
     }
 
     public Map<Branch, Long> getBranchesWithCarCount() {
