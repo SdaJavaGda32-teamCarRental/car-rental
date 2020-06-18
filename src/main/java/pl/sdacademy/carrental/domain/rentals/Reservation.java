@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import pl.sdacademy.carrental.domain.Branch;
 import pl.sdacademy.carrental.domain.Client;
-import pl.sdacademy.carrental.domain.cars.Car;
+import pl.sdacademy.carrental.domain.cars.CarCategory;
 
 import javax.persistence.*;
 import javax.validation.constraints.AssertTrue;
@@ -24,16 +24,16 @@ public class Reservation {
    
    @Id
    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reservation_id_seq")
-   @SequenceGenerator(name = "reservation_id_seq", sequenceName = "reservation_id_seq", allocationSize = 50, initialValue = 1)
+   @SequenceGenerator(name = "reservation_id_seq", sequenceName = "reservation_id_seq")
    private Long id;
    
    @CreationTimestamp
    @Column(name = "reservation_date")
    private LocalDateTime reservationDate;
    
-   @ManyToOne
-   @JoinColumn(name = "car_id")
-   private Car car;
+   @Column(name = "car_category")
+   @Enumerated(EnumType.STRING)
+   private CarCategory carCategory;
    
    @ManyToOne
    @JoinColumn(name = "client_id")
@@ -57,8 +57,8 @@ public class Reservation {
    @Column(name = "amount")
    private int payableAmount;
    
-   @AssertTrue
-   private boolean returnDateShouldBeAfterPickupDate() {
+   @AssertTrue(message = "Return date must be after pickup date")
+   private boolean isReturnAfterPickup() {
       return returnDate.isAfter(pickupDate);
    }
    

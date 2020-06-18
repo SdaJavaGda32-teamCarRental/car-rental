@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.sdacademy.carrental.domain.cars.Car;
+import pl.sdacademy.carrental.model.ReservationListDetails;
 import pl.sdacademy.carrental.requests.CarReservationRequest;
 import pl.sdacademy.carrental.services.ReservationService;
 
@@ -24,9 +24,13 @@ public class ReservationsController {
    @PostMapping
    public String showPageWithAvailableCarsGivenDateAndBranch(@ModelAttribute final CarReservationRequest reservationRequest,
                                                              final Model model) {
-      final List<Car> carList = reservationService.getAvailableCarsByReservationRequest(reservationRequest);
+      final List<ReservationListDetails> upForReservation = reservationService.getCarsUpForReservation(reservationRequest);
+      
       model.addAttribute("reservationRequest", reservationRequest);
-      model.addAttribute("carList", carList);
+      model.addAttribute("carList", upForReservation);
+   
+      System.out.println("upForReservation = " + upForReservation);
+      
       return "reservation";
    }
    

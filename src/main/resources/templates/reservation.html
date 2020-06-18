@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
    <div th:replace="_components :: headTags"></div>
    <title>New Reservation</title>
@@ -10,11 +10,11 @@ xmlns:th="http://www.thymeleaf.org">
 
 <ul>
    <li th:each="car : ${carList}" th:object="${car}">
-      <p th:text="*{make}"></p>
-      <p th:text="*{model}"></p>
+      <h3 th:text="'Vehicle class: ' + *{carCategory}"></h3>
+      <p th:text="*{makeAndModel + ' (or similar)'}"></p>
       <p th:text="*{fuelType}"></p>
-      <p th:text="*{'PLN ' + rentPrice + ' / day'}"></p>
-      <p th:text="*{currentBranch.name}"></p>
+      <p th:text="*{'PLN ' + pricePerDay + ' / day'}"></p>
+      <p th:text="*{'PLN ' + rentalCost}"></p>
    </li>
 </ul>
 
