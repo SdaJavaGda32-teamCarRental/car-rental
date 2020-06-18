@@ -11,7 +11,8 @@ import pl.sdacademy.carrental.domain.cars.CarCategory;
 
 import javax.persistence.*;
 import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -33,6 +34,7 @@ public class Reservation {
    
    @Column(name = "car_category")
    @Enumerated(EnumType.STRING)
+   @NotNull
    private CarCategory carCategory;
    
    @ManyToOne
@@ -40,10 +42,12 @@ public class Reservation {
    private Client client;
    
    @Column(name = "pickup_date")
-   @Future
+   @FutureOrPresent
+   @NotNull
    private LocalDate pickupDate;
    
    @Column(name = "return_date")
+   @NotNull
    private LocalDate returnDate;
    
    @ManyToOne
@@ -55,11 +59,12 @@ public class Reservation {
    private Branch returnBranch;
    
    @Column(name = "amount")
+   @NotNull
    private int payableAmount;
    
    @AssertTrue(message = "Return date must be after pickup date")
    private boolean isReturnAfterPickup() {
-      return returnDate.isAfter(pickupDate);
+      return returnDate.isAfter(pickupDate.minusDays(1));
    }
    
 }

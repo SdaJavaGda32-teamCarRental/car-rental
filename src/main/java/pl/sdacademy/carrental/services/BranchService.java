@@ -98,7 +98,7 @@ public class BranchService {
    
    private Map<CarCategory, Long> getAvailableCarCountPerCategory(final Branch branch) {
        return branch.getCarsOnHand().stream()
-             .filter(car -> car.getCurrentStatus().equals(Status.IN))
+             .filter(car -> car.getCurrentStatus() == Status.IN)
              .collect(Collectors.groupingBy(
                    Car::getCategory,
                    Collectors.counting()));
