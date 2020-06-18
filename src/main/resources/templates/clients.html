@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="_components :: headTags"></div>
+    <title>Clients</title>
+</head>
+<body>
+<form method="get" th:action="@{/admin/clients/create}">
+    <button type="submit">Register</button>
+</form>
+<p>Clients:</p>
+<ol>
+    <li th:each="client : ${clients}">
+        <p th:text="'Id: ' + ${client.getId()}"></p>
+        <p th:text="'First Name: ' + ${client.getFirstName()}"></p>
+        <p th:text="'Last Name: ' + ${client.getLastName()}"></p>
+        <p th:text="'Email: ' + ${client.getEmail()}"></p>
+        <p th:text="'City: ' + ${client.getAddress().getCity()}"></p>
+        <p th:text="'Street: ' + ${client.getAddress().getStreet()}"></p>
+        <p th:text="'Building: ' + ${client.getAddress().getBuilding()}"></p>
+        <p th:text="'Apartment: ' + ${client.getAddress().getApartment()}"></p>
+        <p th:text="'Zip Code: ' + ${client.getAddress().getZipCode()}"></p>
+        <p th:text="'Phone number ' + ${client.getPhoneNumber()}"></p>
+
+        <form method="get" th:action="@{/admin/clients/edit/__${client.getId()}__}">
+            <button type="submit">EDIT</button>
+        </form>
+        <form method="get" th:action="@{/admin/clients/delete/__${client.getId()}__}">
+            <button type="submit">DELETE</button>
+        </form>
+    </li>
+</ol>
+</body>
+</html>
