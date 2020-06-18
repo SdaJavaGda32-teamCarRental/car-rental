@@ -103,11 +103,11 @@ public class BranchService {
                    Car::getCategory,
                    Collectors.counting()));
    }
-    
-    public Branch findBranchByName(final String branchName) {
-        return branchRepository.findBranchByName(branchName).orElseThrow(() -> {
-            // TODO: 16/06/2020 throw and handle a dedicated exception
-            throw new RuntimeException("Branch of name " + branchName + " not found!");
-        });
-    }
+   
+   public Branch findBranchByName(final String branchName) {
+      return branchRepository.findByName(branchName).orElseThrow(() -> {
+         // TODO: 16/06/2020 throw and handle a dedicated exception
+         throw new RuntimeException("Branch of name " + branchName + " not found!");
+      });
+   }
 }

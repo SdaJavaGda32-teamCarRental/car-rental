@@ -11,7 +11,7 @@ import pl.sdacademy.carrental.services.BranchService;
 import java.time.LocalDate;
 import java.util.List;
 
-import static pl.sdacademy.carrental.configuration.DomainValues.UPCHARGE_FOR_CHANGE_OF_BRANCH;
+import static pl.sdacademy.carrental.configuration.DomainValues.*;
 
 @Controller
 @RequestMapping("/")

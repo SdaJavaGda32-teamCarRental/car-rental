@@ -1,4 +1,4 @@
-let navbar = document.querySelector("nav.navbar");
+const navbar = document.querySelector("nav.navbar");
 window.onscroll = function () {
     shrinkNavbarOnScroll();
 };
@@ -22,10 +22,10 @@ window.onload = () => {
     setReturnDateToMatchPickup();
 }
 
-let pickupDate = document.getElementById('pickup_date');
+const pickupDate = document.getElementById('pickup_date');
 
 function setCurrentDateAsPickupDate() {
-    let today = new Date();
+    const today = new Date();
     let month = today.getMonth() + 1;
     if (month < 10) {
         month = '0' + month
@@ -36,7 +36,7 @@ function setCurrentDateAsPickupDate() {
 pickupDate.addEventListener('change', setReturnDateToMatchPickup);
 
 function setReturnDateToMatchPickup() {
-    let returnDatePicker = document.getElementById('return_date');
+    const returnDatePicker = document.getElementById('return_date');
     returnDatePicker.value = pickupDate.value;
     returnDatePicker.min = pickupDate.value;
 }

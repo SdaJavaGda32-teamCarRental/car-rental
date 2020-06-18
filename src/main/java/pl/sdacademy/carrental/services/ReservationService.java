@@ -11,11 +11,11 @@ import pl.sdacademy.carrental.repositories.ReservationRepository;
 import pl.sdacademy.carrental.requests.CarReservationRequest;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Transactional
@@ -37,39 +37,51 @@ public class ReservationService {
    }
    
    public List<ReservationListDetails> getCarsUpForReservation(final CarReservationRequest request) {
-      final Branch pickupBranch = branchService.findBranchByName(request.getPickupBranchName());
-      final LocalDate pickupDate = LocalDate.parse(request.getPickupDate());
-      final LocalDate returnDate = LocalDate.parse(request.getReturnDate());
-      
       Map<CarCategory, Integer> numberOfAvailableCarsPerCategoryInPeriod = new HashMap<>();
       
-      Arrays.asList(CarCategory.values()).forEach(category -> {
-         final int numberOfCarsToday = carService.getNumberOfCarsAvailableInBranch(category, pickupBranch);
-         final int carsLeaving = getNumberOfCarsLeavingBranchBeforeDate(category, pickupBranch, LocalDate.now(), pickupDate);
-         final int carsReturning = getNumberOfCarsReturningBranchBeforeDate(category, pickupBranch, LocalDate.now(), pickupDate);
-         
-         int numberOfCarsOnDate = numberOfCarsToday - carsLeaving + carsReturning;
-         
-         int lowestNumberOfAvailableCars = getLowestNumberOfAvailableCars(pickupBranch, pickupDate, returnDate, category, numberOfCarsOnDate);
-         if (lowestNumberOfAvailableCars > 0) {
-            numberOfAvailableCarsPerCategoryInPeriod.put(category, lowestNumberOfAvailableCars);
-         }
-      });
+      Stream.of(CarCategory.values()).forEach(category ->
+            putCarCountAvailableInBranchAndDatesPerCategory(numberOfAvailableCarsPerCategoryInPeriod,
+                  request, category));
+      
       final List<Car> sampleCarsList = convertToSampleCarsList(numberOfAvailableCarsPerCategoryInPeriod);
       
       return getReservationOfferListItems(request, sampleCarsList);
    }
    
+   private void putCarCountAvailableInBranchAndDatesPerCategory(final Map<CarCategory, Integer> numberOfAvailableCarsPerCategoryInPeriod,
+                                                                final CarReservationRequest request,
+                                                                final CarCategory category) {
+      
+      final Branch pickupBranch = branchService.findBranchByName(request.getPickupBranchName());
+      final LocalDate pickupDate = LocalDate.parse(request.getPickupDate());
+      final LocalDate returnDate = LocalDate.parse(request.getReturnDate());
+      
+      int numberOfCarsOnDate = getNumberOfCarsOnDate(pickupBranch, pickupDate, category);
+      
+      int carsAvailableInDateRangeAndBranch = getLowestNumberOfAvailableCars(pickupBranch, pickupDate, returnDate, category, numberOfCarsOnDate);
+      if (carsAvailableInDateRangeAndBranch > 0) {
+         numberOfAvailableCarsPerCategoryInPeriod.put(category, carsAvailableInDateRangeAndBranch);
+      }
+   }
+   
+   private int getNumberOfCarsOnDate(final Branch pickupBranch, final LocalDate pickupDate, final CarCategory category) {
+      final int numberOfCarsToday = carService.getNumberOfCarsAvailableInBranch(category, pickupBranch);
+      final int carsLeaving = getNumberOfCarsLeavingBranchBeforeDate(category, pickupBranch, LocalDate.now(), pickupDate);
+      final int carsReturning = getNumberOfCarsReturningBranchBeforeDate(category, pickupBranch, LocalDate.now(), pickupDate);
+      
+      return numberOfCarsToday - carsLeaving + carsReturning;
+   }
+   
    private List<Car> convertToSampleCarsList(final Map<CarCategory, Integer> numberOfAvailableCarsPerCategoryInPeriod) {
       return numberOfAvailableCarsPerCategoryInPeriod.keySet().stream()
-               .map(carService::findSampleCarByCategory)
-               .collect(Collectors.toList());
+            .map(carService::findSampleCarByCategory)
+            .collect(Collectors.toList());
    }
    
    private List<ReservationListDetails> getReservationOfferListItems(final CarReservationRequest request, final List<Car> carList) {
       return carList.stream()
-               .map(car -> carToReservationListItemMapper.mapCarToListItem(car, request))
-               .collect(Collectors.toList());
+            .map(car -> carToReservationListItemMapper.mapCarToListItem(car, request))
+            .collect(Collectors.toList());
    }
    
    private int getLowestNumberOfAvailableCars(final Branch pickupBranch,
@@ -77,12 +89,14 @@ public class ReservationService {
                                               final LocalDate returnDate,
                                               final CarCategory category,
                                               int numberOfCarsOnDate) {
+      
       int lowestNumberOfAvailableCars = numberOfCarsOnDate;
+      
       for (LocalDate date = pickupDate; date.isEqual(returnDate); date = date.plusDays(1)) {
          numberOfCarsOnDate = numberOfCarsOnDate
                - getNumberOfCarsLeavingBranchBeforeDate(category, pickupBranch, date, date)
                + getNumberOfCarsReturningBranchBeforeDate(category, pickupBranch, date, date);
-         System.out.println(date + " : " + numberOfCarsOnDate);
+         
          if (numberOfCarsOnDate < lowestNumberOfAvailableCars) {
             lowestNumberOfAvailableCars = numberOfCarsOnDate;
          }
