@@ -9,6 +9,7 @@ import pl.sdacademy.carrental.model.ReservationListDetails;
 import pl.sdacademy.carrental.requests.CarReservationRequest;
 import pl.sdacademy.carrental.services.ReservationService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static pl.sdacademy.carrental.configuration.DomainValues.UPCHARGE_FOR_CHANGE_OF_BRANCH;
@@ -24,7 +25,7 @@ public class ReservationsController {
    }
    
    @PostMapping
-   public String showPageWithAvailableCarsGivenDateAndBranch(@ModelAttribute final CarReservationRequest reservationRequest,
+   public String showPageWithAvailableCarsGivenDateAndBranch(@ModelAttribute @Valid final CarReservationRequest reservationRequest,
                                                              final Model model) {
       final List<ReservationListDetails> upForReservation = reservationService.getCarsUpForReservation(reservationRequest);
       

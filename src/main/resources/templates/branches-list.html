@@ -2,30 +2,35 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>List of Company's Branches</title>
+   <meta charset="UTF-8">
+   <title>List of Company's Branches</title>
 </head>
 <body>
 
 <main>
-    <p>Branches:</p>
-    <ol>
-        <li th:id="${branch.key.id}" th:each="branch : ${branchList}">
-            <p th:text="${branch.key.name}"></p>
-            <p>
-                <span th:text="${branch.key.address.street} + ' '"></span>
-                <span th:text="${branch.key.address.building} + ' '"></span>
-                <span th:if="${branch.key.address.apartment != null}" th:text="${branch.key.address.apartment}"></span>
-            </p>
-            <p>
-                <span th:text="${branch.key.address.zipCode} + ' '"></span>
-                <span th:text="${branch.key.address.city} + ' '"></span>
-            </p>
-            <p th:text="${branch.key.employees}"></p>
-            <p>Cars available: <span th:text="${branch.value}"></span></p>
-            <span th:if="${branch.value < MinimumAvailableCars}">There are less than 3 cars available in this branch!</span>
-        </li>
-    </ol>
+   <p>Branches:</p>
+   <ol>
+      <li th:id="${branch.key.id}" th:each="branch : ${branchList}">
+         <p th:text="${branch.key.name}"></p>
+         <p>
+            <span th:text="${branch.key.address.street} + ' '"></span>
+            <span th:text="${branch.key.address.building} + ' '"></span>
+            <span th:if="${branch.key.address.apartment != null}" th:text="${branch.key.address.apartment}"></span>
+         </p>
+         <p>
+            <span th:text="${branch.key.address.zipCode} + ' '"></span>
+            <span th:text="${branch.key.address.city} + ' '"></span>
+         </p>
+         <p th:text="${branch.key.employees}"></p>
+         <ul>Cars available:
+            <li th:each="category : ${branch.value}">
+               <p th:text="'category ' + ${category.key} + ' : ' + ${category.value}"></p>
+               <p th:if="${category.value} < ${MinimumAvailableCars}">There are less than 3 cars available in this branch!</p>
+            </li>
+
+         </ul>
+      </li>
+   </ol>
 </main>
 
 </body>
