@@ -11,6 +11,8 @@ import pl.sdacademy.carrental.services.ReservationService;
 
 import java.util.List;
 
+import static pl.sdacademy.carrental.configuration.DomainValues.UPCHARGE_FOR_CHANGE_OF_BRANCH;
+
 @Controller
 @RequestMapping("/reservation")
 public class ReservationsController {
@@ -28,6 +30,7 @@ public class ReservationsController {
       
       model.addAttribute("reservationRequest", reservationRequest);
       model.addAttribute("carList", upForReservation);
+      model.addAttribute("returnElsewhereFee", UPCHARGE_FOR_CHANGE_OF_BRANCH);
    
       System.out.println("upForReservation = " + upForReservation);
       

@@ -29,7 +29,14 @@
             </div>
 
             <div class="form-group-vertical">
-               <label for="return_branch" th:text="#{reservation.form.return.branch}"></label>
+               <label for="return_branch">
+                  <span th:text="#{reservation.form.return.branch}"></span>
+                  <i class="fas fa-info-circle rental-tooltip">
+                     <span class="tooltiptext"
+                           th:text="#{reservation.form.return_elsewhere_message} + ': PLN ' + ${returnElsewhereFee}">
+                     </span>
+                  </i>
+               </label>
                <select name="returnBranchName" required id="return_branch" th:field="*{returnBranchName}">
                   <option disabled hidden selected value="" id="blank_return">select return branch…</option>
                   <option th:each="branch : ${branchList}" th:value="${branch.getName()}"

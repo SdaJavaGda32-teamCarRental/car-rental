@@ -83,4 +83,39 @@ header main.intro-image form.vert-form button {
   border-radius: 5px;
 }
 
+.rental-tooltip {
+  position: relative;
+  display: inline-block;
+}
+.rental-tooltip .tooltiptext {
+  visibility: hidden;
+  width: 350px;
+  bottom: 120%;
+  left: 50%;
+  margin-left: -175px;
+  background-color: #eee;
+  color: #333;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  border: 1px solid #26680d;
+  position: absolute;
+  z-index: 1;
+  font-family: Asap, sans-serif;
+  font-weight: 400;
+}
+.rental-tooltip .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #26680d transparent transparent transparent;
+}
+.rental-tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
 /*# sourceMappingURL=styles.css.map */

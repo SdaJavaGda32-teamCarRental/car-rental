@@ -11,6 +11,8 @@ import pl.sdacademy.carrental.services.BranchService;
 import java.time.LocalDate;
 import java.util.List;
 
+import static pl.sdacademy.carrental.configuration.DomainValues.UPCHARGE_FOR_CHANGE_OF_BRANCH;
+
 @Controller
 @RequestMapping("/")
 public class HomeController {
@@ -26,6 +28,7 @@ public class HomeController {
       final LocalDate today = LocalDate.now();
       final List<Branch> branchList = branchService.getAll();
       model.addAttribute("today", today);
+      model.addAttribute("returnElsewhereFee", UPCHARGE_FOR_CHANGE_OF_BRANCH);
       model.addAttribute("carReservationRequest", new CarReservationRequest());
       model.addAttribute("branchList", branchList);
       return "home";
