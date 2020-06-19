@@ -49,7 +49,7 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
             .zipCode("80-053")
             .city("Gdańsk")
             .build());
-   
+
       final Address ldzAddress = addressRepo.save(Address.builder()
             .street("Wigury")
             .building("21")
