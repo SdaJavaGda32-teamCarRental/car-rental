@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Entity(name = "company")
 public class Company {
-   private static Company INSTANCE;
 
    @Id
    @NotNull
@@ -29,20 +28,7 @@ public class Company {
    @JoinColumn(name = "address_id")
    private Address address;
 
-   @Column(name = "company_logotype")
-   private String logotype;
-
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "company")
-//    private List<Branch> branches = new ArrayList<>();
-
-
-    public static Company getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new Company();
-        }
-        return INSTANCE;
-    }
+   @OneToOne
+   @JoinColumn(name = "logotype_id")
+   private Logotype logotype;
 }
