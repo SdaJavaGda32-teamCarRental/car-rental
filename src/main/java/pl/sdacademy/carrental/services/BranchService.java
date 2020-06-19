@@ -155,8 +155,7 @@ public class BranchService {
    
    public Branch findBranchByName(final String branchName) {
       return branchRepository.findByName(branchName).orElseThrow(() -> {
-         // TODO: 16/06/2020 throw and handle a dedicated exception
-         throw new RuntimeException("Branch of name " + branchName + " not found!");
+         throw new BranchException("Branch of name " + branchName + " not found!");
       });
    }
 }
