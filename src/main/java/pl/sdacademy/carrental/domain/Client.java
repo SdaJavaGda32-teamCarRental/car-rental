@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -38,6 +39,6 @@ public class Client {
    private Address address;
    
    @Column(name = "phone_number")
-   @Pattern(regexp = "\\d{9}")
+   @Digits(integer = 9, fraction = 0, message = "Phone number must consist of 9 digits")
    private String phoneNumber;
 }
