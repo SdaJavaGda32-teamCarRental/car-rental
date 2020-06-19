@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.sdacademy.carrental.domain.Company;
 import pl.sdacademy.carrental.model.BranchForm;
 import pl.sdacademy.carrental.repositories.LogotypeRepository;
 import pl.sdacademy.carrental.services.BranchService;
@@ -19,16 +20,25 @@ public class CompanyController {
     private final BranchService branchService;
     private final LogotypeRepository logotypeRepository;
 
-    public CompanyController(final CompanyService companyService, final BranchService branchService, final LogotypeRepository logotypeRepository) {
+    public CompanyController(final CompanyService companyService,
+                             final BranchService branchService,
+                             final LogotypeRepository logotypeRepository) {
         this.companyService = companyService;
         this.branchService = branchService;
         this.logotypeRepository = logotypeRepository;
     }
 
-    @GetMapping("/")
-    public String showCompanyDetails(final ModelMap modelMap) {
+    @GetMapping
+    public String editCompanyDetails(final ModelMap modelMap) {
+        modelMap.addAttribute("companyForm", companyService.getCompanyForm());
         modelMap.addAttribute("logotypeIds", companyService.getAllLogotypeIds());
         return "company";
+    }
+
+    @PostMapping("/edit")
+    public String handleCompanyEdit(@ModelAttribute(name = "company") final Company company){
+        companyService.update(company);
+        return "redirect:/admin/company";
     }
 
     @GetMapping(value = "/logo/{id}",
