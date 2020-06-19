@@ -8,8 +8,6 @@
 <form method="get" th:action="@{/admin/company/branches/create}">
    <button type="submit">CREATE BRANCH</button>
 </form>
-<p>DO NOT remove branch with Id=1(created on app startup). For reasons unknown to me(Oskar), it throws and exception and
-   I was unable to fix it. It will get fixed later.</p>
 <p>Branches:</p>
 <ol>
    <li th:each="branch : ${branches}">
