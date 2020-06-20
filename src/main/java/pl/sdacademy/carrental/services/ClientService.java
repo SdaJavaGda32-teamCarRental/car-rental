@@ -29,7 +29,7 @@ public class ClientService {
     }
 
     public void createClient(final ClientForm clientForm) {
-        
+      
         final Address address = createAddressFromClientForm(clientForm);
 
         final Client client = Client.builder()
