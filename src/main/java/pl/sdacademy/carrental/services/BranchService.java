@@ -128,6 +128,7 @@ public class BranchService {
         final Branch branch = findExistingById(id);
         final Address address = branch.getAddress();
         return BranchForm.builder()
+              .name(branch.getName())
                 .city(address.getCity())
                 .street(address.getStreet())
                 .building(address.getBuilding())
