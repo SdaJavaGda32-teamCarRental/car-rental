@@ -8,7 +8,6 @@
 <header>
     <nav th:replace="_components :: navigationBar"></nav>
 </header>
-<h1>123 </h1>
 <div>
     <div>
         <form method="post" th:action="@{/admin/company/edit}" th:object="${companyForm}">
@@ -41,12 +40,14 @@
                 <input type="text" th:field="*{apartment}">
             </label>
             <label>
-                Company logotype:
+                Company logotype: (current logotype-id: <span th:text="${companyForm.logotypeId}"></span>)
             </label>
             <ul>
                 <li th:each="logotypeId : ${logotypeIds}">
+                    <input type="radio" name="logo_id" th:field="*{logotypeId}" th:value="${logotypeId}"/>
                     <img th:src="@{/admin/company/logo/__${logotypeId}__}">
                 </li>
+            </ul>
             </ul>
             <button type="submit">
                 Edit company details

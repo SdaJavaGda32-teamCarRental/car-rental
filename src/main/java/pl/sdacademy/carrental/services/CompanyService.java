@@ -3,10 +3,13 @@ package pl.sdacademy.carrental.services;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import pl.sdacademy.carrental.domain.Address;
 import pl.sdacademy.carrental.domain.Branch;
 import pl.sdacademy.carrental.domain.Company;
 import pl.sdacademy.carrental.domain.Logotype;
+import pl.sdacademy.carrental.model.BranchForm;
 import pl.sdacademy.carrental.model.CompanyForm;
+import pl.sdacademy.carrental.repositories.AddressRepository;
 import pl.sdacademy.carrental.repositories.CompanyRepository;
 import pl.sdacademy.carrental.repositories.LogotypeRepository;
 
@@ -28,12 +31,14 @@ public class CompanyService {
     private final BranchService branchService;
     private final LogotypeRepository logotypeRepository;
     private final CompanyRepository companyRepository;
+    private final AddressRepository addressRepository;
 
 
-    public CompanyService(final BranchService branchService, final LogotypeRepository logotypeRepository, final CompanyRepository companyRepository) {
+    public CompanyService(final BranchService branchService, final LogotypeRepository logotypeRepository, final CompanyRepository companyRepository, final AddressRepository addressRepository) {
         this.branchService = branchService;
         this.logotypeRepository = logotypeRepository;
         this.companyRepository = companyRepository;
+        this.addressRepository = addressRepository;
     }
 
     public List<Branch> getAllBranches() {
@@ -73,12 +78,38 @@ public class CompanyService {
         return companyRepository.getOne(COMPANY_ID);
     }
 
-    public void update(final Company company) {
+    public void update(final CompanyForm companyForm) {
+        final Company company = get();
 
+        final Address address = createAddressFromForm(companyForm);
+        final Address originalAddress = company.getAddress();
+
+        //TODO refactor - wydzielenie osobnej metody
+        if (!address.equals(originalAddress)) {
+            addressRepository.save(address);
+            company.setAddress(address);
+            addressRepository.delete(originalAddress);
+        }
+
+        company.setLogotype(logotypeRepository.getOne(companyForm.getLogotypeId()));
+        company.setName(companyForm.getName());
+        company.setDomain(companyForm.getDomain());
+        companyRepository.save(company);
+    }
+
+    //TODO - refactor na generic! razem z createAddressFromBranchForm - wszystkie Formy implementują np. GenericForm?
+    private Address createAddressFromForm(final CompanyForm companyForm) {
+        return Address.builder()
+                .city(companyForm.getCity())
+                .street(companyForm.getStreet())
+                .building(companyForm.getBuilding())
+                .apartment(companyForm.getApartment())
+                .zipCode(companyForm.getZipCode())
+                .build();
     }
 
     public CompanyForm getCompanyForm() {
-        final Company company = companyRepository.getOne(COMPANY_ID);
+        final Company company = get();
         return CompanyForm.builder()
                 .name(company.getName())
                 .domain(company.getDomain())

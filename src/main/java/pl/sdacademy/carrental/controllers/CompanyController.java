@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pl.sdacademy.carrental.domain.Company;
 import pl.sdacademy.carrental.model.BranchForm;
+import pl.sdacademy.carrental.model.CompanyForm;
 import pl.sdacademy.carrental.repositories.LogotypeRepository;
 import pl.sdacademy.carrental.services.BranchService;
 import pl.sdacademy.carrental.services.CompanyService;
@@ -36,8 +36,8 @@ public class CompanyController {
     }
 
     @PostMapping("/edit")
-    public String handleCompanyEdit(@ModelAttribute(name = "company") final Company company){
-        companyService.update(company);
+    public String handleCompanyEdit(@ModelAttribute(name = "companyForm") final CompanyForm companyForm){
+        companyService.update(companyForm);
         return "redirect:/admin/company";
     }
 
