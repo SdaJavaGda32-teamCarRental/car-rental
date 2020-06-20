@@ -1,11 +1,11 @@
 package pl.sdacademy.carrental.services;
 
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.sdacademy.carrental.domain.Address;
 import pl.sdacademy.carrental.domain.Branch;
+import pl.sdacademy.carrental.domain.cars.Car;
+import pl.sdacademy.carrental.domain.cars.CarCategory;
 import pl.sdacademy.carrental.domain.cars.Status;
 import pl.sdacademy.carrental.exceptions.BranchException;
 import pl.sdacademy.carrental.model.BranchForm;
@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class BranchService {
-    public final static int MINIMUM_CAR_COUNT = 3;
 
     private final BranchRepository branchRepository;
     private final AddressRepository addressRepository;
@@ -136,20 +135,28 @@ public class BranchService {
                 .zipCode(address.getZipCode())
                 .status(branch.getStatus())
                 .build();
+
     }
 
-    public Map<Branch, Long> getBranchesWithCarCount() {
+    public Map<Branch, Map<CarCategory, Long>> getBranchesWithCarCount() {
         return getAll().stream()
-                .collect(Collectors.toMap(
-                        Function.identity(),
-                        this::getAvailableCarCount));
+              .collect(Collectors.toMap(
+                    Function.identity(),
+                    this::getAvailableCarCountPerCategory));
 
-    }
-
-    private long getAvailableCarCount(final Branch branch) {
-        return branch.getCarsOnHand().stream()
-                .filter(car -> car.getCurrentStatus()
-                        .equals(Status.IN)).count();
-    }
-
+   }
+   
+   private Map<CarCategory, Long> getAvailableCarCountPerCategory(final Branch branch) {
+       return branch.getCarsOnHand().stream()
+             .filter(car -> car.getCurrentStatus() == Status.IN)
+             .collect(Collectors.groupingBy(
+                   Car::getCategory,
+                   Collectors.counting()));
+   }
+   
+   public Branch findBranchByName(final String branchName) {
+      return branchRepository.findByName(branchName).orElseThrow(() -> {
+         throw new BranchException("Branch of name " + branchName + " not found!");
+      });
+   }
 }
