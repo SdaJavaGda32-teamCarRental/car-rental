@@ -7,11 +7,10 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import pl.sdacademy.carrental.domain.*;
+
+import pl.sdacademy.carrental.repositories.*;
+
 import pl.sdacademy.carrental.domain.cars.*;
-import pl.sdacademy.carrental.repositories.AddressRepository;
-import pl.sdacademy.carrental.repositories.BranchRepository;
-import pl.sdacademy.carrental.repositories.CarRepository;
-import pl.sdacademy.carrental.repositories.EmployeeRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,15 +26,21 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
    private final BranchRepository branchRepo;
    private final AddressRepository addressRepo;
    private final EmployeeRepository employeeRepo;
-   
-   public OnAppStartup(final CarRepository carRepo,
-                       final BranchRepository branchRepo,
-                       final AddressRepository addressRepo,
-                       final EmployeeRepository employeeRepo) {
-      this.carRepo = carRepo;
-      this.branchRepo = branchRepo;
-      this.addressRepo = addressRepo;
-      this.employeeRepo = employeeRepo;
+    private final CompanyRepository companyRepo;
+    private final LogotypeRepository logotypeRepo;
+
+    public OnAppStartup(final CarRepository carRepo,
+                        final BranchRepository branchRepo,
+                        final AddressRepository addressRepo,
+                        final EmployeeRepository employeeRepo,
+                        final CompanyRepository companyRepo,
+                        final LogotypeRepository logotypeRepo) {
+        this.carRepo = carRepo;
+        this.branchRepo = branchRepo;
+        this.addressRepo = addressRepo;
+        this.employeeRepo = employeeRepo;
+        this.companyRepo = companyRepo;
+        this.logotypeRepo = logotypeRepo;
    }
    
    @Override
@@ -69,6 +74,26 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
             .city("Kraków")
             .build());
    
+        final Address companyDummyAddress = addressRepo.save(Address.builder()
+                .street("street")
+                .building("building")
+                .zipCode("zip code")
+                .city("city")
+                .apartment("12")
+                .build());
+
+        final Logotype companyDummyLogotype = logotypeRepo.save(Logotype.builder()
+        .id(1L)
+        .build());
+
+        companyRepo.save(Company.builder()
+                .id(1L)
+                .name("Generic company name")
+                .address(companyDummyAddress)
+                .domain("domain-name")
+                .logotype(companyDummyLogotype)
+                .build());
+
       final List<Branch> branches = new ArrayList<>();
    
       final Branch gdansk = (Branch.builder()
