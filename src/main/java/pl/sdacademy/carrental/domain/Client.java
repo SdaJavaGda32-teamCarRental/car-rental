@@ -7,10 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 
 @Data
 @NoArgsConstructor
@@ -20,13 +17,15 @@ import javax.validation.constraints.Pattern;
 public class Client {
    @Id
    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "client_id_seq")
-   @SequenceGenerator(name = "client_id_seq", sequenceName = "client_id_seq", allocationSize = 50, initialValue = 1)
+   @SequenceGenerator(name = "client_id_seq", sequenceName = "client_id_seq")
    private Long id;
    
    @Column(name = "first_name")
+   @NotBlank
    private String firstName;
    
    @Column(name = "last_name")
+   @NotBlank
    private String lastName;
    
    @Column(name = "email")
@@ -39,6 +38,7 @@ public class Client {
    private Address address;
    
    @Column(name = "phone_number")
+   @NotNull
    @Digits(integer = 9, fraction = 0, message = "Phone number must consist of 9 digits")
    private String phoneNumber;
 }

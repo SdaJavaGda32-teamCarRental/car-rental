@@ -39,6 +39,7 @@ public class Reservation {
    
    @ManyToOne
    @JoinColumn(name = "client_id")
+   @NotNull
    private Client client;
    
    @Column(name = "pickup_date")
@@ -52,10 +53,12 @@ public class Reservation {
    
    @ManyToOne
    @JoinColumn(name = "pickup_branch")
+   @NotNull
    private Branch pickupBranch;
    
    @ManyToOne
    @JoinColumn(name = "return_branch")
+   @NotNull
    private Branch returnBranch;
    
    @Column(name = "amount")
@@ -64,6 +67,9 @@ public class Reservation {
    
    @AssertTrue(message = "Return date must be after pickup date")
    private boolean isReturnAfterPickup() {
+      if (returnDate == null || pickupDate == null) {
+         return false;
+      }
       return returnDate.isAfter(pickupDate.minusDays(1));
    }
    

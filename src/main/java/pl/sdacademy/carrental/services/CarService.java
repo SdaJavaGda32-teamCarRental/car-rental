@@ -8,7 +8,6 @@ import pl.sdacademy.carrental.domain.cars.CarCategory;
 import pl.sdacademy.carrental.domain.cars.Status;
 import pl.sdacademy.carrental.repositories.CarRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service

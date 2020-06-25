@@ -7,6 +7,32 @@
 </head>
 <body>
 <div th:replace="_components :: navigationBar"></div>
+<section class="reservation-step step-one">
+   <div class="pickup-info">
+      <ul>
+         <li>
+            <span>pickup branch: </span>
+            <span th:text="${reservationRequest.pickupBranchName}"></span>
+         </li>
+         <li>
+            <span>pickup date: </span>
+            <span th:text="${reservationRequest.pickupDate}"></span>
+         </li>
+      </ul>
+   </div>
+   <div class="return-info">
+      <ul>
+         <li>
+            <span>return branch: </span>
+            <span th:text="${reservationRequest.returnBranchName}"></span>
+         </li>
+         <li>
+            <span>return date: </span>
+            <span th:text="${reservationRequest.returnDate}"></span>
+         </li>
+      </ul>
+   </div>
+</section>
 
 <ul>
    <li th:each="car : ${carList}" th:object="${car}">

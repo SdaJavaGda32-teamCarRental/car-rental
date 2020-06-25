@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BranchRepository extends JpaRepository<Branch, Long> {
-
-    Optional<Branch> findBranchByAddress(final Address address);
-
-    List<Branch> getAllByStatus(final BranchStatus status);
+   
+   Optional<Branch> findBranchByAddress(final Address address);
+   
+   List<Branch> getAllByStatus(final BranchStatus status);
    
    Optional<Branch> findByName(String branchName);
 }

@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.builder.EqualsExclude;
-import org.apache.commons.lang3.builder.HashCodeExclude;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 @Data
@@ -15,25 +15,30 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 @Entity(name = "addresses")
+@Validated
 public class Address {
-
+   
    @Id
    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "addres_id_seq")
-   @SequenceGenerator(name = "address_id_seq", sequenceName = "address_id_seq", allocationSize = 50, initialValue = 1)
+   @SequenceGenerator(name = "address_id_seq", sequenceName = "address_id_seq")
    private Long id;
    
+   @NotBlank
    @Column(name = "street")
    private String street;
    
+   @NotBlank
    @Column(name = "building")
    private String building;
    
    @Column(name = "apartment")
    private String apartment;
    
+   @NotBlank
    @Column(name = "zip_code")
    private String zipCode;
    
+   @NotBlank
    @Column(name = "city")
    private String city;
 

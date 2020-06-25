@@ -30,7 +30,8 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
    
    public OnAppStartup(final CarRepository carRepo,
                        final BranchRepository branchRepo,
-                       final AddressRepository addressRepo, EmployeeRepository employeeRepo) {
+                       final AddressRepository addressRepo,
+                       final EmployeeRepository employeeRepo) {
       this.carRepo = carRepo;
       this.branchRepo = branchRepo;
       this.addressRepo = addressRepo;

@@ -28,7 +28,7 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
-    public void createClient(final ClientForm clientForm) {
+    public Client createClient(final ClientForm clientForm) {
       
         final Address address = createAddressFromClientForm(clientForm);
 
@@ -39,7 +39,7 @@ public class ClientService {
                 .address(address)
                 .phoneNumber(clientForm.getPhoneNumber())
                 .build();
-        clientRepository.save(client);
+        return clientRepository.save(client);
     }
 
     public void delete(final Long id) {

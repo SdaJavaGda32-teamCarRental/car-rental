@@ -5,6 +5,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import pl.sdacademy.carrental.domain.rentals.Reservation;
+import pl.sdacademy.carrental.model.ClientForm;
 import pl.sdacademy.carrental.model.ReservationListDetails;
 import pl.sdacademy.carrental.requests.CarReservationRequest;
 import pl.sdacademy.carrental.services.ReservationService;
@@ -16,24 +19,36 @@ import static pl.sdacademy.carrental.configuration.DomainValues.UPCHARGE_FOR_CHA
 
 @Controller
 @RequestMapping("/reservation")
+@SessionAttributes("reservarion")
 public class ReservationsController {
-   
-   private final ReservationService reservationService;
-   
-   public ReservationsController(final ReservationService reservationService) {
-      this.reservationService = reservationService;
-   }
-   
-   @PostMapping
-   public String showPageWithAvailableCarsGivenDateAndBranch(@ModelAttribute @Valid final CarReservationRequest reservationRequest,
-                                                             final Model model) {
-      final List<ReservationListDetails> upForReservation = reservationService.getCarsUpForReservation(reservationRequest);
-      
-      model.addAttribute("reservationRequest", reservationRequest);
-      model.addAttribute("carList", upForReservation);
-      model.addAttribute("returnElsewhereFee", UPCHARGE_FOR_CHANGE_OF_BRANCH);
-      
-      return "reservation";
-   }
-   
+
+    private final ReservationService reservationService;
+
+    public ReservationsController(final ReservationService reservationService) {
+        this.reservationService = reservationService;
+    }
+
+    @PostMapping
+    public String showPageWithAvailableCarsGivenDateAndBranch(@ModelAttribute @Valid final CarReservationRequest reservationRequest,
+                                                              final Model model) {
+        final List<ReservationListDetails> upForReservation = reservationService.getCarsUpForReservation(reservationRequest);
+
+        model.addAttribute("reservationRequest", reservationRequest);
+        model.addAttribute("carList", upForReservation);
+        model.addAttribute("returnElsewhereFee", UPCHARGE_FOR_CHANGE_OF_BRANCH);
+
+        return "reservation";
+    }
+
+    @PostMapping("/step2")
+    public String showReserveCar(@ModelAttribute @Valid final CarReservationRequest request,
+                                 @ModelAttribute @Valid final ReservationListDetails reservationDetails,
+                                 final Model model) {
+
+//        reservationService.createReservation(request, reservationDetails)
+
+
+        return "step2";
+    }
+
 }

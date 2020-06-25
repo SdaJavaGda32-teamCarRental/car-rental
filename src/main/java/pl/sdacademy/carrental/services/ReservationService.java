@@ -1,11 +1,15 @@
 package pl.sdacademy.carrental.services;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.sdacademy.carrental.configuration.DomainValues;
 import pl.sdacademy.carrental.domain.Branch;
 import pl.sdacademy.carrental.domain.cars.Car;
 import pl.sdacademy.carrental.domain.cars.CarCategory;
+import pl.sdacademy.carrental.domain.rentals.Reservation;
 import pl.sdacademy.carrental.mappers.CarToReservationListItemDetailsMapper;
+import pl.sdacademy.carrental.model.ClientForm;
 import pl.sdacademy.carrental.model.ReservationListDetails;
 import pl.sdacademy.carrental.repositories.ReservationRepository;
 import pl.sdacademy.carrental.requests.CarReservationRequest;
@@ -19,23 +23,16 @@ import java.util.stream.Stream;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ReservationService {
    
    private final ReservationRepository reservationRepo;
    private final BranchService branchService;
    private final CarService carService;
+   private final ClientService clientService;
    private final CarToReservationListItemDetailsMapper carToReservationListItemMapper;
    
-   public ReservationService(final ReservationRepository reservationRepo,
-                             final BranchService branchService,
-                             final CarService carService,
-                             final CarToReservationListItemDetailsMapper carToReservationListItemMapper) {
-      this.reservationRepo = reservationRepo;
-      this.branchService = branchService;
-      this.carService = carService;
-      this.carToReservationListItemMapper = carToReservationListItemMapper;
-   }
-   
+
    public List<ReservationListDetails> getCarsUpForReservation(final CarReservationRequest request) {
       Map<CarCategory, Integer> numberOfAvailableCarsPerCategoryInPeriod = new HashMap<>();
       
@@ -53,8 +50,8 @@ public class ReservationService {
                                                                 final CarCategory category) {
       
       final Branch pickupBranch = branchService.findBranchByName(request.getPickupBranchName());
-      final LocalDate pickupDate = LocalDate.parse(request.getPickupDate());
-      final LocalDate returnDate = LocalDate.parse(request.getReturnDate());
+      final LocalDate pickupDate = request.getPickupDate();
+      final LocalDate returnDate = request.getReturnDate();
       
       int numberOfCarsOnDate = getNumberOfCarsOnDate(pickupBranch, pickupDate, category);
       
@@ -111,5 +108,37 @@ public class ReservationService {
    private int getNumberOfCarsLeavingBranchBeforeDate(final CarCategory category, final Branch branch, final LocalDate start, final LocalDate end) {
       return reservationRepo.countCarLeavingBranchBetweenDates(category, branch, start, end);
    }
-   
+
+   public Reservation createReservation(final CarReservationRequest request,
+                                 final ReservationListDetails reservationDetails,
+                                 final ClientForm clientForm) {
+
+      return Reservation.builder()
+              .pickupDate(request.getPickupDate())
+              .returnDate(request.getReturnDate())
+              .pickupBranch(branchService.findBranchByName(request.getPickupBranchName()))
+              .returnBranch(branchService.findBranchByName(request.getReturnBranchName()))
+              .carCategory(reservationDetails.getCarCategory())
+              .client(clientService.createClient(clientForm))
+              .payableAmount(calculateAmount(request, reservationDetails))
+              .build();
+   }
+
+   private int calculateAmount(final CarReservationRequest request,
+                               final ReservationListDetails reservationDetails) {
+      final LocalDate pickupDate = request.getPickupDate();
+      final LocalDate returnDate = request.getReturnDate();
+      final int days = returnDate.compareTo(pickupDate);
+      final int rentPrice = carService.findSampleCarByCategory(reservationDetails.getCarCategory()).getRentPrice();
+
+      final boolean isReturnedToSameBranch = request.getPickupBranchName().equals(request.getReturnBranchName());
+
+      int rentCost = days * rentPrice;
+
+      if (isReturnedToSameBranch) {
+         return rentCost;
+      }
+      return rentCost + DomainValues.UPCHARGE_FOR_CHANGE_OF_BRANCH;
+
+   }
 }

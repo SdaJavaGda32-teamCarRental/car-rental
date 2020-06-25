@@ -14,8 +14,8 @@ import static pl.sdacademy.carrental.configuration.DomainValues.UPCHARGE_FOR_CHA
 public class CarToReservationListItemDetailsMapper {
    
    public ReservationListDetails mapCarToListItem(final Car car, CarReservationRequest request) {
-      final LocalDate pickupDate = LocalDate.parse(request.getPickupDate());
-      final LocalDate returnDate = LocalDate.parse(request.getReturnDate());
+      final LocalDate pickupDate = request.getPickupDate();
+      final LocalDate returnDate = request.getReturnDate();
       final int daysOfRent = (int) ChronoUnit.DAYS.between(pickupDate, returnDate.plusDays(1));
       int cost = getTotalCost(car, request, daysOfRent);
    
