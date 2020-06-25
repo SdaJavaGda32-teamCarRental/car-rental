@@ -1,5 +1,6 @@
 package pl.sdacademy.carrental.boostrap;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Profile;
@@ -7,10 +8,8 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import pl.sdacademy.carrental.domain.*;
-
-import pl.sdacademy.carrental.repositories.*;
-
 import pl.sdacademy.carrental.domain.cars.*;
+import pl.sdacademy.carrental.repositories.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,28 +19,15 @@ import java.util.Random;
 @Profile("dev")
 @Component
 @Transactional
+@RequiredArgsConstructor
 public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> {
    
    private final CarRepository carRepo;
    private final BranchRepository branchRepo;
    private final AddressRepository addressRepo;
    private final EmployeeRepository employeeRepo;
-    private final CompanyRepository companyRepo;
-    private final LogotypeRepository logotypeRepo;
-
-    public OnAppStartup(final CarRepository carRepo,
-                        final BranchRepository branchRepo,
-                        final AddressRepository addressRepo,
-                        final EmployeeRepository employeeRepo,
-                        final CompanyRepository companyRepo,
-                        final LogotypeRepository logotypeRepo) {
-        this.carRepo = carRepo;
-        this.branchRepo = branchRepo;
-        this.addressRepo = addressRepo;
-        this.employeeRepo = employeeRepo;
-        this.companyRepo = companyRepo;
-        this.logotypeRepo = logotypeRepo;
-   }
+   private final CompanyRepository companyRepo;
+   private final LogotypeRepository logotypeRepo;
    
    @Override
    public void onApplicationEvent(final ContextRefreshedEvent contextRefreshedEvent) {
@@ -52,57 +38,57 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
             .zipCode("80-053")
             .city("Gdańsk")
             .build());
-   
+      
       final Address ldzAddress = addressRepo.save(Address.builder()
             .street("Wigury")
             .building("21")
             .zipCode("90-435")
             .city("Łódź")
             .build());
-   
+      
       final Address wawAddress = addressRepo.save(Address.builder()
             .street("Puławska")
             .building("326")
             .zipCode("02-112")
             .city("Warszawa")
             .build());
-   
+      
       final Address krkAddress = addressRepo.save(Address.builder()
             .street("Zakopiańska")
             .building("58B")
             .zipCode("34-220")
             .city("Kraków")
             .build());
-   
-        final Address companyDummyAddress = addressRepo.save(Address.builder()
-                .street("street")
-                .building("building")
-                .zipCode("zip code")
-                .city("city")
-                .apartment("12")
-                .build());
-
-        final Logotype companyDummyLogotype = logotypeRepo.save(Logotype.builder()
-        .id(1L)
-        .build());
-
-        companyRepo.save(Company.builder()
-                .id(1L)
-                .name("Generic company name")
-                .address(companyDummyAddress)
-                .domain("domain-name")
-                .logotype(companyDummyLogotype)
-                .build());
-
+      
+      final Address companyDummyAddress = addressRepo.save(Address.builder()
+            .street("street")
+            .building("building")
+            .zipCode("zip code")
+            .city("city")
+            .apartment("12")
+            .build());
+      
+      final Logotype companyDummyLogotype = logotypeRepo.save(Logotype.builder()
+            .id(1L)
+            .build());
+      
+      companyRepo.save(Company.builder()
+            .id(1L)
+            .name("Generic company name")
+            .address(companyDummyAddress)
+            .domain("domain-name")
+            .logotype(companyDummyLogotype)
+            .build());
+      
       final List<Branch> branches = new ArrayList<>();
-   
+      
       final Branch gdansk = (Branch.builder()
             .address(gdAddress)
             .name("Gdańsk")
             .status(BranchStatus.OPEN)
             .build());
       branches.add(gdansk);
-   
+      
       final Branch lodz = Branch.builder()
             .address(ldzAddress)
             .name("Łódź")
@@ -126,7 +112,7 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
       
       branchRepo.saveAll(branches);
       
-   
+      
       final Car skoda = Car.builder()
             .make("Skoda")
             .model("Rapid")
@@ -136,7 +122,7 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
             .rentPrice(99)
             .currentStatus(Status.IN)
             .build();
-
+      
       final Car merc = Car.builder()
             .make("Mercedes-Benz")
             .category(CarCategory.E)
@@ -146,7 +132,7 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
             .rentPrice(320)
             .currentStatus(Status.IN)
             .build();
-
+      
       final Car audi = Car.builder()
             .make("Audi")
             .model("A6")
@@ -176,12 +162,12 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
             .rentPrice(120)
             .currentStatus(Status.IN)
             .build();
-   
+      
       final List<Car> carTemplates = List.of(skoda, merc, audi, panda, corsa);
-   
+      
       List<Car> carsToSave = new ArrayList<>();
       
-   
+      
       for (Car template : carTemplates) {
          for (Branch branch : branches) {
             for (int j = 0; j < 50; j++) {
@@ -206,23 +192,23 @@ public class OnAppStartup implements ApplicationListener<ContextRefreshedEvent> 
             }
          }
       }
-   
+      
       carRepo.saveAll(carsToSave);
-   
+      
       final Employee marek = Employee.builder()
             .firstName("Marek")
             .lastName("Kowalski")
             .role(EmployeeRole.EMPLOYEE)
             .branch(krakow)
             .build();
-
+      
       final Employee zenek = Employee.builder()
             .firstName("Zenek")
             .lastName("Poranek")
             .role(EmployeeRole.EMPLOYEE)
             .branch(gdansk)
             .build();
-
+      
       employeeRepo.saveAll(List.of(
             marek,
             zenek));
