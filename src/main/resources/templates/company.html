@@ -1,10 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <div th:replace="_components :: headTags"></div>
     <title>Company</title>
 </head>
 <body>
+<header>
+    <nav th:replace="_components :: navigationBar"></nav>
+</header>
+<div>
+    <div>
+        <form method="post" th:action="@{/admin/company/edit}" th:object="${companyForm}">
+            <label>
+                Company name:
+                <input type="text" th:field="*{name}">
+            </label>
+            <label>
+                Company domain:
+                <input type="text" th:field="*{domain}">
+            </label>
+            <label>
+                Company city:
+                <input type="text" th:field="*{city}">
+            </label>
+            <label>
+                Company zip code:
+                <input type="text" th:field="*{zipCode}">
+            </label>
+            <label>
+                Company street:
+                <input type="text" th:field="*{street}">
+            </label>
+            <label>
+                Company building:
+                <input type="text" th:field="*{building}">
+            </label>
+            <label>
+                Company apartment:
+                <input type="text" th:field="*{apartment}">
+            </label>
+            <label>
+                Company logotype: (current logotype-id: <span th:text="${companyForm.logotypeId}"></span>)
+            </label>
+            <ul>
+                <li th:each="logotypeId : ${logotypeIds}">
+                    <input type="radio" name="logo_id" th:field="*{logotypeId}" th:value="${logotypeId}"/>
+                    <img th:src="@{/admin/company/logo/__${logotypeId}__}">
+                </li>
+            </ul>
+            </ul>
+            <button type="submit">
+                Edit company details
+            </button>
+        </form>
+    </div>
+
+    <form method="POST" enctype="multipart/form-data" action="/admin/company/uploadLogo">
+        <table>
+            <tr>
+                <td>File to upload:</td>
+                <td><input type="file" name="imageFile"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Upload"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
 
 </body>
 </html>
