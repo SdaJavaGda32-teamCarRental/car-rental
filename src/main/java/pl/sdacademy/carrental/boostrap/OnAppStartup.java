@@ -7,11 +7,10 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import pl.sdacademy.carrental.domain.*;
-import pl.sdacademy.carrental.domain.cars.Car;
-import pl.sdacademy.carrental.domain.cars.Color;
-import pl.sdacademy.carrental.domain.cars.FuelType;
-import pl.sdacademy.carrental.domain.cars.Status;
+
 import pl.sdacademy.carrental.repositories.*;
+
+import pl.sdacademy.carrental.domain.cars.*;
 
 import java.util.ArrayList;
 import java.util.List;

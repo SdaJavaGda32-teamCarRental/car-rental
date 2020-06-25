@@ -1,0 +1,33 @@
+.rental-tooltip
+  position: relative
+  display: inline-block
+  .tooltiptext
+    visibility: hidden
+    width: 350px
+    bottom: 120%
+    left: 50%
+    margin-left: -175px
+    background-color: #eee
+    color: #333
+    text-align: center
+    padding: 5px 0
+    border-radius: 6px
+    border: 1px solid $color-primary
+    position: absolute
+    z-index: 1
+    font-family: $base-font
+    font-weight: 400
+    &::after
+      content: " "
+      position: absolute
+      top: 100%
+      left: 50%
+      margin-left: -5px
+      border-width: 5px
+      border-style: solid
+      border-color: $color-primary transparent transparent transparent
+
+  &:hover .tooltiptext
+    visibility: visible
+
+
